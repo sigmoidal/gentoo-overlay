@@ -24,3 +24,26 @@ src_prepare() {
 	default_src_prepare
 	eautoreconf
 }
+
+#src_configure() {
+#
+#	econf --disable-hardening \
+#		--disable-optimizations \
+#		$(use_enable debug) \
+#		$(use_enable static-libs static)
+#}
+
+#src_install() {
+#	default_src_install
+#	if [[ -f "${D}usr/share/doc/${P}/COPYING" ]] ; then
+#		rm "${D}usr/share/doc/${P}/COPYING" || die
+#	fi
+#	# Installing all the manuals conflicts with man-pages
+#	doman doc/man/bson_*.3
+#	use static-libs || find "${D}" -name '*.la' -delete
+#
+#	if use examples; then
+#		insinto /usr/share/${PF}/examples
+#		doins examples/*.c
+#	fi
+#}
