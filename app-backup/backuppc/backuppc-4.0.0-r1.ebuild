@@ -2,7 +2,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-inherit depend.apache eutils user systemd
+inherit depend.apache eutils toolchain-funcs user systemd
 
 MY_P="BackupPC-${PV}"
 
@@ -13,7 +13,7 @@ SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.gz"
 LICENSE="GPL-2"
 KEYWORDS="amd64 x86"
 
-IUSE="rss samba"
+IUSE="rss samba apache2 systemd"
 
 # The CGI modules are handled in $RDEPEND.
 APACHE_MODULES="apache2_modules_alias," # RedirectMatch
@@ -30,6 +30,8 @@ DEPEND="dev-lang/perl"
 # so we require the new one explicitly.
 RDEPEND="${DEPEND}
 	dev-perl/BackupPC-XS
+	app-arch/gzip
+	app-arch/bzip2
 "
 #	virtual/perl-IO-Compress
 #	dev-perl/Archive-Zip
@@ -37,8 +39,6 @@ RDEPEND="${DEPEND}
 #	dev-perl/libwww-perl
 #	app-arch/tar
 #	app-arch/par2cmdline
-#	app-arch/gzip
-#	app-arch/bzip2
 #	virtual/mta
 #	>=www-apache/mod_perl-2.0.9
 #	www-apache/mpm_itk
@@ -49,6 +49,7 @@ RDEPEND="${DEPEND}
 #	dev-perl/File-RsyncP
 #	rss? ( dev-perl/XML-RSS )
 #	samba? ( net-fs/samba )"
+
 
 need_apache2_4
 
@@ -61,17 +62,19 @@ CONFDIR="/etc/BackupPC"
 DATADIR="/var/lib/backuppc"
 DOCDIR="/usr/share/doc/${PF}"
 LOGDIR="/var/log/BackupPC"
+RUNDIR="/run"
 
 pkg_setup() {
 	enewgroup backuppc
 	enewuser backuppc -1 /bin/bash /var/lib/backuppc backuppc
 }
 
-#src_prepare() {
+src_prepare() {
 
-	#eautoreconf
-	# for version 0.51 only
-	#epatch "${FILESDIR}/d394e556bfbbf254f227bb4084104932261f740e.patch"
+	default
+	epatch "${FILESDIR}/gentoo-backuppc-4.0.0.patch"
+
+	# older patches. did not check if those still apply to 4.x
 
 	#epatch "${FILESDIR}/3.3.0/01-fix-configure.pl.patch"
 	#epatch "${FILESDIR}/3.3.0/02-fix-config.pl-formatting.patch"
@@ -85,7 +88,8 @@ pkg_setup() {
 	# Fix docs location using the marker that we've patched in.
 	#sed -i "s+__DOCDIR__+${DOCDIR}+" "lib/BackupPC/CGI/View.pm" \
 	#	|| die "failed to sed the documentation location"
-#}
+
+}
 
 src_install() {
 	local myconf
@@ -115,6 +119,7 @@ src_install() {
 		--dest-dir "${D%/}" \
 		--html-dir "${CGIDIR}"/image \
 		--html-dir-url /image \
+		--run-dir "${RUNDIR}" \
 		--cgi-dir "${CGIDIR}" \
 		--fhs \
 		${myconf} || die "failed the configure.pl script"
@@ -131,10 +136,9 @@ src_install() {
 	doman backuppc.8
 
 	# Place the documentation in the correct location
-	dodoc "${D}/usr/doc/BackupPC.html"
-	dodoc "${D}/usr/doc/BackupPC.pod"
-	rm -rf "${D}/usr/doc" || die
-
+	dodoc "${D}/usr/share/doc/BackupPC/BackupPC.html"
+	dodoc "${D}/usr/share/doc/BackupPC/BackupPC.pod"
+	rm -rf "${D}/usr/share/doc/BackupPC" || die
 	eend 0
 
 	# Setup directories
@@ -145,13 +149,22 @@ src_install() {
 	keepdir "${DATADIR}"/{trash,pool,pc,cpool}
 	keepdir "${LOGDIR}"
 
-	ebegin "Setting up init.d/conf.d/systemd scripts"
-	newinitd "${S}"/init.d/gentoo-backuppc backuppc
-	newconfd "${S}"/init.d/gentoo-backuppc.conf backuppc
-	systemd_dounit "${FILESDIR}/${PN}.service"
+	if ! use systemd ; then
+		ebegin "Setting up OpenRC scripts"
+		newinitd "${S}"/init.d/gentoo-backuppc backuppc
+		newconfd "${S}"/init.d/gentoo-backuppc.conf backuppc
+	fi
 
-	insinto "${APACHE_MODULES_CONFDIR}"
-	doins "${FILESDIR}"/99_backuppc.conf
+	if use systemd ; then
+		ebegin "Setting up systemd scripts"
+		systemd_dounit "${FILESDIR}/${PN}.service"
+	fi
+
+	if use apache2 ; then
+		einfo "Installing apache backuppc configuration in ${APACHE_MODULES_CONFDIR}"
+		insinto "${APACHE_MODULES_CONFDIR}"
+		doins "${FILESDIR}"/99_backuppc.conf
+	fi
 
 	# Make sure that the ownership is correct
 	chown -R backuppc:backuppc "${D}${CONFDIR}" || die
@@ -190,9 +203,9 @@ pkg_postinst() {
 
 	# Generate a new password if there's no auth file
 	if [[ ! -f "${CONFDIR}/users.htpasswd" ]]; then
-		#adminuser="backuppc"
-		#adminpass=$( makepasswd --chars=12 )
-		#htpasswd -bc "${CONFDIR}/users.htpasswd" $adminuser $adminpass
+		adminuser="backuppc"
+		adminpass=$( makepasswd --chars=12 )
+		htpasswd -bc "${CONFDIR}/users.htpasswd" $adminuser $adminpass
 
 		elog ""
 		elog "- Created admin user $adminuser with password $adminpass"
