@@ -1,7 +1,7 @@
 # Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=6
 inherit depend.apache eutils user systemd
 
 MY_P="BackupPC-${PV}"
@@ -22,31 +22,33 @@ APACHE_MODULES+="apache2_modules_authz_core," # Require
 APACHE_MODULES+="apache2_modules_authz_host," # Require host
 APACHE_MODULES+="apache2_modules_authz_user" # Require valid-user
 
-DEPEND="dev-lang/perl
-	app-admin/apache-tools
-	app-admin/makepasswd"
+DEPEND="dev-lang/perl"
+#	app-admin/apache-tools
+#	app-admin/makepasswd"
 
 # Older versions of mod_perl think they're compatibile with apache-2.4,
 # so we require the new one explicitly.
 RDEPEND="${DEPEND}
-	virtual/perl-IO-Compress
-	dev-perl/Archive-Zip
-	dev-perl/CGI
-	dev-perl/libwww-perl
-	app-arch/tar
-	app-arch/par2cmdline
-	app-arch/gzip
-	app-arch/bzip2
-	virtual/mta
-	>=www-apache/mod_perl-2.0.9
-	www-apache/mpm_itk
-	|| ( >=www-servers/apache-2.4[${APACHE_MODULES},apache2_modules_cgi]
-		 >=www-servers/apache-2.4[${APACHE_MODULES},apache2_modules_cgid]
-		 >=www-servers/apache-2.4[${APACHE_MODULES},apache2_modules_fcgid] )
-	net-misc/rsync
-	dev-perl/File-RsyncP
-	rss? ( dev-perl/XML-RSS )
-	samba? ( net-fs/samba )"
+	dev-perl/BackupPC-XS
+"
+#	virtual/perl-IO-Compress
+#	dev-perl/Archive-Zip
+#	dev-perl/CGI
+#	dev-perl/libwww-perl
+#	app-arch/tar
+#	app-arch/par2cmdline
+#	app-arch/gzip
+#	app-arch/bzip2
+#	virtual/mta
+#	>=www-apache/mod_perl-2.0.9
+#	www-apache/mpm_itk
+#	|| ( >=www-servers/apache-2.4[${APACHE_MODULES},apache2_modules_cgi]
+#		 >=www-servers/apache-2.4[${APACHE_MODULES},apache2_modules_cgid]
+#		 >=www-servers/apache-2.4[${APACHE_MODULES},apache2_modules_fcgid] )
+#	net-misc/rsync
+#	dev-perl/File-RsyncP
+#	rss? ( dev-perl/XML-RSS )
+#	samba? ( net-fs/samba )"
 
 need_apache2_4
 
@@ -65,20 +67,25 @@ pkg_setup() {
 	enewuser backuppc -1 /bin/bash /var/lib/backuppc backuppc
 }
 
-src_prepare() {
-	epatch "${FILESDIR}/3.3.0/01-fix-configure.pl.patch"
-	epatch "${FILESDIR}/3.3.0/02-fix-config.pl-formatting.patch"
-	epatch "${FILESDIR}/3.3.0/03-reasonable-config.pl-defaults.patch"
+#src_prepare() {
 
-	epatch "${FILESDIR}/3.2.0/04-add-docdir-marker.patch"
-	epatch "${FILESDIR}/3.2.0/05-nicelevel.patch"
+	#eautoreconf
+	# for version 0.51 only
+	#epatch "${FILESDIR}/d394e556bfbbf254f227bb4084104932261f740e.patch"
 
-	epatch "${FILESDIR}"/${P}-perl522.patch #580254
+	#epatch "${FILESDIR}/3.3.0/01-fix-configure.pl.patch"
+	#epatch "${FILESDIR}/3.3.0/02-fix-config.pl-formatting.patch"
+	#epatch "${FILESDIR}/3.3.0/03-reasonable-config.pl-defaults.patch"
+
+	#epatch "${FILESDIR}/3.2.0/04-add-docdir-marker.patch"
+	#epatch "${FILESDIR}/3.2.0/05-nicelevel.patch"
+
+	#epatch "${FILESDIR}"/${P}-perl522.patch #580254
 
 	# Fix docs location using the marker that we've patched in.
-	sed -i "s+__DOCDIR__+${DOCDIR}+" "lib/BackupPC/CGI/View.pm" \
-		|| die "failed to sed the documentation location"
-}
+	#sed -i "s+__DOCDIR__+${DOCDIR}+" "lib/BackupPC/CGI/View.pm" \
+	#	|| die "failed to sed the documentation location"
+#}
 
 src_install() {
 	local myconf
@@ -183,9 +190,9 @@ pkg_postinst() {
 
 	# Generate a new password if there's no auth file
 	if [[ ! -f "${CONFDIR}/users.htpasswd" ]]; then
-		adminuser="backuppc"
-		adminpass=$( makepasswd --chars=12 )
-		htpasswd -bc "${CONFDIR}/users.htpasswd" $adminuser $adminpass
+		#adminuser="backuppc"
+		#adminpass=$( makepasswd --chars=12 )
+		#htpasswd -bc "${CONFDIR}/users.htpasswd" $adminuser $adminpass
 
 		elog ""
 		elog "- Created admin user $adminuser with password $adminpass"

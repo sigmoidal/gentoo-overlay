@@ -18,6 +18,9 @@ DEPEND="${RDEPEND}
 	test? ( dev-perl/Test-Fatal
 	virtual/perl-Test-Simple )
 "
+
+MAKEOPTS+=" -j1"
+
 src_test() {
 	perl_rm_files t/99pod.t
 	perl-module_src_test
