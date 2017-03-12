@@ -62,7 +62,7 @@ CONFDIR="/etc/BackupPC"
 DATADIR="/var/lib/backuppc"
 DOCDIR="/usr/share/doc/${PF}"
 LOGDIR="/var/log/BackupPC"
-RUNDIR="/run"
+RUNDIR="/run/backuppc"
 
 pkg_setup() {
 	enewgroup backuppc

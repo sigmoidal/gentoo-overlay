@@ -1,8 +1,17 @@
---- init.d/src/gentoo-backuppc	2017-03-12 17:47:36.884235569 +0200
-+++ init.d/src/gentoo-backuppc	2017-03-12 17:48:46.100233294 +0200
+--- a/init.d/src/gentoo-backuppc	2017-03-12 20:48:56.924734956 +0200
++++ b/init.d/src/gentoo-backuppc	2017-03-12 20:50:02.232732811 +0200
 @@ -1,4 +1,4 @@
 -#!/sbin/runscript
 +#!/sbin/openrc-run
  #
  # DESCRIPTION
  #
+@@ -21,7 +21,7 @@
+ start() {
+ 	checkconfig || return 1
+ 	ebegin "Starting BackupPC"
+-	start-stop-daemon --start --chuid ${USER} --user ${USER} --pidfile ${PID_FILE} --exec ${EXEC} -- ${EXEC_OPTIONS}
++	start-stop-daemon --start --user ${USER} --pidfile ${PID_FILE} --exec ${EXEC} -- ${EXEC_OPTIONS}
+ 	eend $?
+ }
+ 
