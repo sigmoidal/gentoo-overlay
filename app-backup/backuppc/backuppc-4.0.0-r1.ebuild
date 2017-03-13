@@ -202,15 +202,15 @@ pkg_postinst() {
 	elog
 
 	# Generate a new password if there's no auth file
-	if [[ ! -f "${CONFDIR}/users.htpasswd" ]]; then
-		adminuser="backuppc"
-		adminpass=$( makepasswd --chars=12 )
-		htpasswd -bc "${CONFDIR}/users.htpasswd" $adminuser $adminpass
-
-		elog ""
-		elog "- Created admin user $adminuser with password $adminpass"
-		elog "  To add new users, run: "
-		elog ""
-		elog "  # htpasswd ${CONFDIR}/users.htpasswd newUser"
-	fi
+	#if [[ ! -f "${CONFDIR}/users.htpasswd" ]]; then
+	#	adminuser="backuppc"
+	#	adminpass=$( makepasswd --chars=12 )
+	#	htpasswd -bc "${CONFDIR}/users.htpasswd" $adminuser $adminpass
+	#
+	#	elog ""
+	#	elog "- Created admin user $adminuser with password $adminpass"
+	#	elog "  To add new users, run: "
+	#	elog ""
+	#	elog "  # htpasswd ${CONFDIR}/users.htpasswd newUser"
+	#fi
 }
