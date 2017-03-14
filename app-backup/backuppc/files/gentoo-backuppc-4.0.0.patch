@@ -1,5 +1,5 @@
---- a/init.d/src/gentoo-backuppc	2017-03-12 20:48:56.924734956 +0200
-+++ b/init.d/src/gentoo-backuppc	2017-03-12 20:50:02.232732811 +0200
+--- a/systemd/src/init.d/gentoo-backuppc	2017-03-12 20:48:56.924734956 +0200
++++ b/systemd/src/init.d/gentoo-backuppc	2017-03-12 20:50:02.232732811 +0200
 @@ -1,4 +1,4 @@
 -#!/sbin/runscript
 +#!/sbin/openrc-run

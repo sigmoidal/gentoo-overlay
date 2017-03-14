@@ -2,17 +2,18 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-inherit depend.apache eutils toolchain-funcs user systemd
+inherit depend.apache eutils git-r3 toolchain-funcs user systemd
 
-MY_P="BackupPC-${PV}"
+MY_P="backuppc-${PV}"
 
 DESCRIPTION="High-performance backups to a server's disk"
-HOMEPAGE="http://backuppc.sourceforge.net/"
-SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.gz"
+HOMEPAGE="https://github.com/backuppc/backuppc"
+SRC_URI=""
+EGIT_REPO_URI="https://github.com/backuppc/backuppc.git"
 
 LICENSE="GPL-3"
 KEYWORDS="amd64 x86"
-
+SLOT="0"
 IUSE="rss samba apache2 systemd"
 
 # The CGI modules are handled in $RDEPEND.
@@ -53,8 +54,6 @@ RDEPEND="${DEPEND}
 
 need_apache2_4
 
-SLOT="0"
-
 S="${WORKDIR}/${MY_P}"
 
 CGIDIR="/usr/lib/backuppc/htdocs"
@@ -91,13 +90,25 @@ src_prepare() {
 
 }
 
+src_compile() {
+	${S}/makeDist --nosyntaxCheck --version ${PVR}
+}
+
 src_install() {
+
+	WD=${S}/dist/BackupPC-9999
+	einfo "Working Directory: ${WD}\n"
+
+	pushd ${WD}
+
 	local myconf
 	myconf=""
 	if use samba ; then
 		myconf="--bin-path smbclient=$(type -p smbclient)"
 		myconf="${myconf} --bin-path nmblookup=$(type -p nmblookup)"
 	fi
+
+	#--dest-dir "${D%/}" 
 
 	/usr/bin/env perl ./configure.pl \
 		--batch \
@@ -116,7 +127,7 @@ src_install() {
 		--data-dir "${DATADIR}" \
 		--hostname 127.0.0.1 \
 		--uid-ignore \
-		--dest-dir "${D%/}" \
+		--dest-dir "${WD%/}" \
 		--html-dir "${CGIDIR}"/image \
 		--html-dir-url /image \
 		--run-dir "${RUNDIR}" \
@@ -130,15 +141,15 @@ src_install() {
 		-errors=none \
 		--section=8 \
 		--center="BackupPC manual" \
-		"${S}"/doc/BackupPC.pod backuppc.8 \
+		"${WD}"/doc/BackupPC.pod backuppc.8 \
 		|| die "failed to generate man page"
 
 	doman backuppc.8
 
 	# Place the documentation in the correct location
-	dodoc "${D}/usr/share/doc/BackupPC/BackupPC.html"
-	dodoc "${D}/usr/share/doc/BackupPC/BackupPC.pod"
-	rm -rf "${D}/usr/share/doc/BackupPC" || die
+	dodoc "${WD}/usr/share/doc/BackupPC/BackupPC.html"
+	dodoc "${WD}/usr/share/doc/BackupPC/BackupPC.pod"
+	rm -rf "${WD}/usr/share/doc/BackupPC" || die
 	eend 0
 
 	# Setup directories
@@ -151,8 +162,8 @@ src_install() {
 
 	if ! use systemd ; then
 		ebegin "Setting up OpenRC scripts"
-		newinitd "${S}"/init.d/gentoo-backuppc backuppc
-		newconfd "${S}"/init.d/gentoo-backuppc.conf backuppc
+		newinitd "${WD}"/systemd/src/init.d/gentoo-backuppc backuppc
+		newconfd "${WD}"/systemd/src/init.d/gentoo-backuppc.conf backuppc
 	fi
 
 	if use systemd ; then
@@ -167,9 +178,11 @@ src_install() {
 	fi
 
 	# Make sure that the ownership is correct
-	chown -R backuppc:backuppc "${D}${CONFDIR}" || die
-	chown -R backuppc:backuppc "${D}${DATADIR}" || die
-	chown -R backuppc:backuppc "${D}${LOGDIR}"  || die
+	chown -R backuppc:backuppc "${WD}${CONFDIR}" || die
+	chown -R backuppc:backuppc "${WD}${DATADIR}" || die
+	chown -R backuppc:backuppc "${WD}${LOGDIR}"  || die
+
+	popd
 }
 
 pkg_postinst() {
