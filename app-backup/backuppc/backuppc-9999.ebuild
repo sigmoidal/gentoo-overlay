@@ -90,7 +90,9 @@ src_prepare() {
 
 }
 
-src_compile() {
+src_configure() {
+	einfo "Configuring with: "
+	einfo "${S}/makeDist --nosyntaxCheck --version ${PVR}"
 	${S}/makeDist --nosyntaxCheck --version ${PVR}
 }
 
@@ -109,6 +111,9 @@ src_install() {
 	fi
 
 	#--dest-dir "${D%/}" 
+	#einfo "=======> I am in:" `pwd`
+	#einfo "Will install in: ${D%/}"
+	#einfo "Or maybe in: ${WD%/}"
 
 	/usr/bin/env perl ./configure.pl \
 		--batch \
@@ -127,7 +132,7 @@ src_install() {
 		--data-dir "${DATADIR}" \
 		--hostname 127.0.0.1 \
 		--uid-ignore \
-		--dest-dir "${WD%/}" \
+		--dest-dir "${D%/}" \
 		--html-dir "${CGIDIR}"/image \
 		--html-dir-url /image \
 		--run-dir "${RUNDIR}" \
@@ -147,9 +152,9 @@ src_install() {
 	doman backuppc.8
 
 	# Place the documentation in the correct location
-	dodoc "${WD}/usr/share/doc/BackupPC/BackupPC.html"
-	dodoc "${WD}/usr/share/doc/BackupPC/BackupPC.pod"
-	rm -rf "${WD}/usr/share/doc/BackupPC" || die
+	dodoc "${D}/usr/share/doc/BackupPC/BackupPC.html"
+	dodoc "${D}/usr/share/doc/BackupPC/BackupPC.pod"
+	rm -rf "${D}/usr/share/doc/BackupPC" || die
 	eend 0
 
 	# Setup directories
@@ -162,8 +167,8 @@ src_install() {
 
 	if ! use systemd ; then
 		ebegin "Setting up OpenRC scripts"
-		newinitd "${WD}"/systemd/src/init.d/gentoo-backuppc backuppc
-		newconfd "${WD}"/systemd/src/init.d/gentoo-backuppc.conf backuppc
+		newinitd "${WD}"/systemd/init.d/gentoo-backuppc backuppc
+		newconfd "${WD}"/systemd/init.d/gentoo-backuppc.conf backuppc
 	fi
 
 	if use systemd ; then
@@ -178,9 +183,9 @@ src_install() {
 	fi
 
 	# Make sure that the ownership is correct
-	chown -R backuppc:backuppc "${WD}${CONFDIR}" || die
-	chown -R backuppc:backuppc "${WD}${DATADIR}" || die
-	chown -R backuppc:backuppc "${WD}${LOGDIR}"  || die
+	chown -R backuppc:backuppc "${D}${CONFDIR}" || die
+	chown -R backuppc:backuppc "${D}${DATADIR}" || die
+	chown -R backuppc:backuppc "${D}${LOGDIR}"  || die
 
 	popd
 }
