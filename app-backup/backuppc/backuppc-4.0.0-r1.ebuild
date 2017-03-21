@@ -12,7 +12,7 @@ SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.gz"
 
 LICENSE="GPL-3"
 KEYWORDS="amd64 x86"
-
+SLOT="0"
 IUSE="rss samba apache2 systemd"
 
 # The CGI modules are handled in $RDEPEND.
@@ -22,22 +22,27 @@ APACHE_MODULES+="apache2_modules_authz_core," # Require
 APACHE_MODULES+="apache2_modules_authz_host," # Require host
 APACHE_MODULES+="apache2_modules_authz_user" # Require valid-user
 
-DEPEND="dev-lang/perl"
+DEPEND="dev-lang/perl
+	dev-perl/CGI
+	dev-perl/File-Listing
+	dev-perl/BackupPC-XS
+	apache2? ( app-admin/makepasswd app-admin/apache-tools )
+"
 #	app-admin/apache-tools
 #	app-admin/makepasswd"
 
 # Older versions of mod_perl think they're compatibile with apache-2.4,
 # so we require the new one explicitly.
 RDEPEND="${DEPEND}
-	dev-perl/BackupPC-XS
+	app-arch/tar
 	app-arch/gzip
 	app-arch/bzip2
 "
+
+# need to test and see which ones are necessary
 #	virtual/perl-IO-Compress
 #	dev-perl/Archive-Zip
-#	dev-perl/CGI
 #	dev-perl/libwww-perl
-#	app-arch/tar
 #	app-arch/par2cmdline
 #	virtual/mta
 #	>=www-apache/mod_perl-2.0.9
@@ -53,9 +58,10 @@ RDEPEND="${DEPEND}
 
 need_apache2_4
 
-SLOT="0"
-
 S="${WORKDIR}/${MY_P}"
+
+BPC_USER=backuppc
+BPC_GROUP=${BPC_USER}
 
 CGIDIR="/usr/lib/backuppc/htdocs"
 CONFDIR="/etc/BackupPC"
@@ -65,31 +71,10 @@ LOGDIR="/var/log/BackupPC"
 RUNDIR="/run/backuppc"
 
 pkg_setup() {
-	enewgroup backuppc
-	enewuser backuppc -1 /bin/bash /var/lib/backuppc backuppc
+	enewgroup ${BPC_GROUP}
+	enewuser ${BPC_USER} -1 /bin/bash /var/lib/backuppc ${BPC_GROUP}
 }
 
-src_prepare() {
-
-	default
-	epatch "${FILESDIR}/gentoo-backuppc-4.0.0.patch"
-
-	# older patches. did not check if those still apply to 4.x
-
-	#epatch "${FILESDIR}/3.3.0/01-fix-configure.pl.patch"
-	#epatch "${FILESDIR}/3.3.0/02-fix-config.pl-formatting.patch"
-	#epatch "${FILESDIR}/3.3.0/03-reasonable-config.pl-defaults.patch"
-
-	#epatch "${FILESDIR}/3.2.0/04-add-docdir-marker.patch"
-	#epatch "${FILESDIR}/3.2.0/05-nicelevel.patch"
-
-	#epatch "${FILESDIR}"/${P}-perl522.patch #580254
-
-	# Fix docs location using the marker that we've patched in.
-	#sed -i "s+__DOCDIR__+${DOCDIR}+" "lib/BackupPC/CGI/View.pm" \
-	#	|| die "failed to sed the documentation location"
-
-}
 
 src_install() {
 	local myconf
@@ -167,9 +152,9 @@ src_install() {
 	fi
 
 	# Make sure that the ownership is correct
-	chown -R backuppc:backuppc "${D}${CONFDIR}" || die
-	chown -R backuppc:backuppc "${D}${DATADIR}" || die
-	chown -R backuppc:backuppc "${D}${LOGDIR}"  || die
+	chown -R ${BPC_USER}:${BPC_GROUP} "${D}${CONFDIR}" || die
+	chown -R ${BPC_USER}:${BPC_GROUP} "${D}${DATADIR}" || die
+	chown -R ${BPC_USER}:${BPC_GROUP} "${D}${LOGDIR}"  || die
 }
 
 pkg_postinst() {
