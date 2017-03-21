@@ -148,7 +148,7 @@ src_install() {
 	if ! use systemd ; then
 		ebegin "Setting up OpenRC scripts"
 		newinitd "${FILESDIR}/gentoo-backuppc-4.x.init" backuppc
-		newconfd "${WD}"/systemd/conf.d/gentoo-backuppc.conf backuppc
+		newconfd "${WD}"/systemd/init.d/gentoo-backuppc.conf backuppc
 	fi
 
 	if use systemd ; then
