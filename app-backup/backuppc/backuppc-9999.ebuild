@@ -62,7 +62,8 @@ need_apache2_4
 S="${WORKDIR}/${MY_P}"
 
 BPC_USER=backuppc
-BPC_GROUP=backuppc
+BPC_GROUP=${BPC_USER}
+
 CGIDIR="/usr/lib/backuppc/htdocs"
 CONFDIR="/etc/BackupPC"
 DATADIR="/var/lib/backuppc"
