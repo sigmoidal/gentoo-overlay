@@ -35,6 +35,7 @@ DEPEND="dev-lang/perl
 # Older versions of mod_perl think they're compatibile with apache-2.4,
 # so we require the new one explicitly.
 RDEPEND="${DEPEND}
+	app-arch/tar
 	app-arch/gzip
 	app-arch/bzip2
 "
@@ -43,7 +44,6 @@ RDEPEND="${DEPEND}
 #	virtual/perl-IO-Compress
 #	dev-perl/Archive-Zip
 #	dev-perl/libwww-perl
-#	app-arch/tar
 #	app-arch/par2cmdline
 #	virtual/mta
 #	>=www-apache/mod_perl-2.0.9
@@ -148,7 +148,7 @@ src_install() {
 	if ! use systemd ; then
 		ebegin "Setting up OpenRC scripts"
 		newinitd "${FILESDIR}/gentoo-backuppc-4.x.init" backuppc
-		newconfd "${WD}"/systemd/init.d/gentoo-backuppc.conf backuppc
+		newconfd "${WD}"/systemd/conf.d/gentoo-backuppc.conf backuppc
 	fi
 
 	if use systemd ; then
