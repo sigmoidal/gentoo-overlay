@@ -27,6 +27,7 @@ DEPEND="dev-lang/perl
 	dev-perl/CGI
 	dev-perl/File-Listing
 	dev-perl/BackupPC-XS
+	apache2? ( app-admin/makepasswd app-admin/apache-tools )
 "
 #	app-admin/apache-tools
 #	app-admin/makepasswd"
@@ -60,6 +61,8 @@ need_apache2_4
 
 S="${WORKDIR}/${MY_P}"
 
+BPC_USER=backuppc
+BPC_GROUP=backuppc
 CGIDIR="/usr/lib/backuppc/htdocs"
 CONFDIR="/etc/BackupPC"
 DATADIR="/var/lib/backuppc"
@@ -68,30 +71,8 @@ LOGDIR="/var/log/BackupPC"
 RUNDIR="/run/backuppc"
 
 pkg_setup() {
-	enewgroup backuppc
-	enewuser backuppc -1 /bin/bash /var/lib/backuppc backuppc
-}
-
-src_prepare() {
-
-	default
-	epatch "${FILESDIR}/gentoo-backuppc-4.0.0.patch"
-
-	# older patches. did not check if those still apply to 4.x
-
-	#epatch "${FILESDIR}/3.3.0/01-fix-configure.pl.patch"
-	#epatch "${FILESDIR}/3.3.0/02-fix-config.pl-formatting.patch"
-	#epatch "${FILESDIR}/3.3.0/03-reasonable-config.pl-defaults.patch"
-
-	#epatch "${FILESDIR}/3.2.0/04-add-docdir-marker.patch"
-	#epatch "${FILESDIR}/3.2.0/05-nicelevel.patch"
-
-	#epatch "${FILESDIR}"/${P}-perl522.patch #580254
-
-	# Fix docs location using the marker that we've patched in.
-	#sed -i "s+__DOCDIR__+${DOCDIR}+" "lib/BackupPC/CGI/View.pm" \
-	#	|| die "failed to sed the documentation location"
-
+	enewgroup ${BPC_GROUP}
+	enewuser ${BPC_USER} -1 /bin/bash /var/lib/backuppc ${BPC_GROUP}
 }
 
 src_configure() {
@@ -113,11 +94,6 @@ src_install() {
 		myconf="--bin-path smbclient=$(type -p smbclient)"
 		myconf="${myconf} --bin-path nmblookup=$(type -p nmblookup)"
 	fi
-
-	#--dest-dir "${D%/}" 
-	#einfo "=======> I am in:" `pwd`
-	#einfo "Will install in: ${D%/}"
-	#einfo "Or maybe in: ${WD%/}"
 
 	/usr/bin/env perl ./configure.pl \
 		--batch \
@@ -171,7 +147,7 @@ src_install() {
 
 	if ! use systemd ; then
 		ebegin "Setting up OpenRC scripts"
-		newinitd "${WD}"/systemd/init.d/gentoo-backuppc backuppc
+		newinitd "${FILESDIR}/gentoo-backuppc-4.x.init" backuppc
 		newconfd "${WD}"/systemd/init.d/gentoo-backuppc.conf backuppc
 	fi
 
@@ -187,14 +163,15 @@ src_install() {
 	fi
 
 	# Make sure that the ownership is correct
-	chown -R backuppc:backuppc "${D}${CONFDIR}" || die
-	chown -R backuppc:backuppc "${D}${DATADIR}" || die
-	chown -R backuppc:backuppc "${D}${LOGDIR}"  || die
+	chown -R ${BPC_USER}:${BPC_GROUP} "${D}${CONFDIR}" || die
+	chown -R ${BPC_USER}:${BPC_GROUP} "${D}${DATADIR}" || die
+	chown -R ${BPC_USER}:${BPC_GROUP} "${D}${LOGDIR}"  || die
 
 	popd
 }
 
 pkg_postinst() {
+
 	elog "Installation finished, you may now start using BackupPC."
 	elog
 	elog "- Read the documentation in /usr/share/doc/${PF}/BackupPC.html"
@@ -223,16 +200,19 @@ pkg_postinst() {
 	elog "    http://127.0.0.1:8080/"
 	elog
 
-	# Generate a new password if there's no auth file
-	#if [[ ! -f "${CONFDIR}/users.htpasswd" ]]; then
-	#	adminuser="backuppc"
-	#	adminpass=$( makepasswd --chars=12 )
-	#	htpasswd -bc "${CONFDIR}/users.htpasswd" $adminuser $adminpass
-	#
-	#	elog ""
-	#	elog "- Created admin user $adminuser with password $adminpass"
-	#	elog "  To add new users, run: "
-	#	elog ""
-	#	elog "  # htpasswd ${CONFDIR}/users.htpasswd newUser"
-	#fi
+	if use apache2 ; then
+		# Generate a new password if there's no auth file
+		if [[ ! -f "${CONFDIR}/users.htpasswd" ]]; then
+			adminuser="backuppc"
+			adminpass=$( makepasswd --chars=12 )
+			htpasswd -bc "${CONFDIR}/users.htpasswd" $adminuser $adminpass
+		
+			elog ""
+			elog "- Created admin user $adminuser with password $adminpass"
+			elog "  To add new users, run: "
+			elog ""
+			elog "  # htpasswd ${CONFDIR}/users.htpasswd newUser"
+		fi
+	fi
+	
 }
