@@ -13,7 +13,7 @@ SRC_URI="https://github.com/backuppc/backuppc/releases/download/v4_1_0/${MY_P}.t
 LICENSE="GPL-3"
 KEYWORDS="amd64 x86"
 SLOT="0"
-IUSE="rss samba apache2 systemd rrdtool"
+IUSE="rss samba apache2 rrdtool systemd"
 
 # The CGI modules are handled in $RDEPEND.
 APACHE_MODULES="apache2_modules_alias," # RedirectMatch

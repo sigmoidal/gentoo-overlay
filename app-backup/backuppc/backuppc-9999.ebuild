@@ -14,7 +14,7 @@ EGIT_REPO_URI="https://github.com/backuppc/backuppc.git"
 LICENSE="GPL-3"
 KEYWORDS="amd64 x86"
 SLOT="0"
-IUSE="rss samba apache2 systemd"
+IUSE="rss samba apache2 rrdtool systemd"
 
 # The CGI modules are handled in $RDEPEND.
 APACHE_MODULES="apache2_modules_alias," # RedirectMatch
