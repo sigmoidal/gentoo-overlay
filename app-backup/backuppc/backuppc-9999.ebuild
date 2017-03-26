@@ -39,7 +39,7 @@ RDEPEND="${DEPEND}
    app-arch/bzip2
    net-misc/rsync
    rss? ( dev-perl/XML-RSS )
-   rrdtool? ( net-analyzer/rrdtool )
+   rrdtool? ( net-analyzer/rrdtool[graph] )
 "
 
 # need to test and see which ones are necessary
