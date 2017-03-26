@@ -24,20 +24,22 @@ APACHE_MODULES+="apache2_modules_authz_host," # Require host
 APACHE_MODULES+="apache2_modules_authz_user" # Require valid-user
 
 DEPEND="dev-lang/perl
-	dev-perl/CGI
-	dev-perl/File-Listing
-	dev-perl/BackupPC-XS
-	apache2? ( app-admin/makepasswd app-admin/apache-tools )
+   dev-perl/CGI
+   dev-perl/File-Listing
+   dev-perl/Archive-Zip
+   >=dev-perl/BackupPC-XS-0.50
+   apache2? ( app-admin/makepasswd app-admin/apache-tools )
 "
-#	app-admin/apache-tools
-#	app-admin/makepasswd"
 
 # Older versions of mod_perl think they're compatibile with apache-2.4,
 # so we require the new one explicitly.
 RDEPEND="${DEPEND}
-	app-arch/tar
-	app-arch/gzip
-	app-arch/bzip2
+   app-arch/tar
+   app-arch/gzip
+   app-arch/bzip2
+   net-misc/rsync
+   rss? ( dev-perl/XML-RSS )
+   rrdtool? ( net-analyzer/rrdtool )
 "
 
 # need to test and see which ones are necessary
