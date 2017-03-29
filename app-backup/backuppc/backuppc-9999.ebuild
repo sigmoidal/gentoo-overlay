@@ -7,7 +7,7 @@ inherit depend.apache eutils git-r3 toolchain-funcs user systemd
 MY_P="backuppc-${PV}"
 
 DESCRIPTION="High-performance backups to a server's disk"
-HOMEPAGE="https://github.com/backuppc/backuppc"
+HOMEPAGE="https://backuppc.github.io/backuppc"
 SRC_URI=""
 EGIT_REPO_URI="https://github.com/backuppc/backuppc.git"
 
@@ -28,6 +28,7 @@ DEPEND="dev-lang/perl
    dev-perl/File-Listing
    dev-perl/Archive-Zip
    >=dev-perl/BackupPC-XS-0.50
+   >=net-misc/rsync-bpc-3.0.9.6
    apache2? ( app-admin/makepasswd app-admin/apache-tools )
 "
 
@@ -40,6 +41,7 @@ RDEPEND="${DEPEND}
    net-misc/rsync
    rss? ( dev-perl/XML-RSS )
    rrdtool? ( net-analyzer/rrdtool[graph] )
+	samba? ( net-fs/samba )
 "
 
 # need to test and see which ones are necessary
@@ -97,6 +99,10 @@ src_install() {
 		myconf="--bin-path smbclient=$(type -p smbclient)"
 		myconf="${myconf} --bin-path nmblookup=$(type -p nmblookup)"
 	fi
+
+   if use rrdtool ; then
+      myconf="${myconf} --bin-path rrdtool=$(type -p rrdtool)"
+   fi
 
 	/usr/bin/env perl ./configure.pl \
 		--batch \
