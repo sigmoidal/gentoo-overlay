@@ -1,5 +1,5 @@
 #!/sbin/openrc-run
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2012 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
@@ -10,15 +10,16 @@ command="${HITCH:-/usr/sbin/hitch}"
 command_args="-p ${HITCH_PID} --config=${CONFIGFILE} --daemon ${HITCH_OPTS}"
 pidfile="${HITCH_PID}"
 
-extra_started_commands="configtest reload"
+extra_started_commands="configtest status reload"
 
-description_reload="Re-read configuration files."
+description_reload="Re-read configuration files. Running processes terminate at their earliest convenience."
+description_abort="Stop the hitch TLS proxy abruptly. Running processes are signaled to stop immediately."
 
 depend() {
-	use logger dns net
-	if [ "${SVCNAME}" = "hitch" ]; then
-		provide hitch
-	fi
+   use logger dns net
+   if [ "${SVCNAME}" = "hitch" ]; then
+      provide hitch
+   fi
 }
 
 configtest() {
@@ -28,7 +29,7 @@ configtest() {
 }
 
 checkconfig() {
-	${command} -t --config=${CONFIGFILE} >/dev/null 2>&1
+   ${command} -t --config=${CONFIGFILE} >/dev/null 2>&1
    ret=$?
    if [ $ret -ne 0 ]; then
       eerror "${SVCNAME} has detected an error in your setup:"
@@ -38,7 +39,19 @@ checkconfig() {
    return $ret
 }
 
+start_pre() {
+   checkconfig || return 1
+}
+
+stop_pre() {
+   if [ "${RC_CMD}" = "restart" ]; then
+      checkconfig || return 1
+   fi
+}
+
 reload() {
+   checkconfig || return 1
+
    ebegin "Reloading ${SVCNAME}"
    start-stop-daemon -p ${HITCH_PID} -s SIGHUP
    eend $?

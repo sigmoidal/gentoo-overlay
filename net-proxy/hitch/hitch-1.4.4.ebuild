@@ -35,7 +35,7 @@ src_install() {
 	newins "${FILESDIR}"/hitch.conf hitch.conf
 
 	dosbin "src/${PN}"
-	
+
 	keepdir /var/lib/${PN}
 	fowners ${HUSER}:${HGROUP} /var/lib/${PN}
 	fperms 750 /var/lib/${PN}
