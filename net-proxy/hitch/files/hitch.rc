@@ -10,7 +10,7 @@ command="${HITCH:-/usr/sbin/hitch}"
 command_args="-p ${HITCH_PID} --config=${CONFIGFILE} --daemon ${HITCH_OPTS}"
 pidfile="${HITCH_PID}"
 
-extra_started_commands="configtest status reload"
+extra_started_commands="configtest reload"
 
 description_reload="Re-read configuration files. Running processes terminate at their earliest convenience."
 description_abort="Stop the hitch TLS proxy abruptly. Running processes are signaled to stop immediately."
