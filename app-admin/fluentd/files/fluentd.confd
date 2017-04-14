@@ -1,0 +1,4 @@
+# /etc/conf.d/fluentd
+
+# Options to pass to the fluentd process
+#FLUENTD_OPTS="-vv"
