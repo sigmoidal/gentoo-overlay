@@ -31,7 +31,7 @@ ruby_add_rdepend "
 	>=dev-ruby/http_parser_rb-0.5.1 <dev-ruby/http_parser_rb-0.7.0
 	>=dev-ruby/json-1.4.3
 	>=dev-ruby/msgpack-0.5.11 <dev-ruby/msgpack-0.6.0
-	~dev-ruby/sigdump-0.2.2
+	~dev-ruby/sigdump-0.2
 	>=dev-ruby/tzinfo-1.0.0
 	>=dev-ruby/tzinfo-data-1.0.0
 	=dev-ruby/yajl-ruby-1*"
