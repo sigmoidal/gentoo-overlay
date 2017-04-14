@@ -34,7 +34,7 @@ dev-ruby/httpclient
 >=dev-ruby/jquery-rails-3.1.0
 >dev-ruby/kramdown-1.0.0
 www-servers/puma
-~dev-ruby/rails-4.2
+>=dev-ruby/rails-4.2
 >=dev-ruby/rubyzip-1.1
 >=dev-ruby/sass-rails-4.0
 dev-ruby/settingslogic
