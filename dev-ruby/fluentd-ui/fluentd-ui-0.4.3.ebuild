@@ -5,7 +5,7 @@
 EAPI=6
 USE_RUBY="ruby21 ruby22"
 
-RUBY_FAKEGEM_BINWRAP=""
+RUBY_FAKEGEM_BINWRAP="fluentd-ui"
 
 RUBY_FAKEGEM_TASK_DOC=""
 RUBY_FAKEGEM_TASK_TEST=""
@@ -41,3 +41,7 @@ dev-ruby/settingslogic
 dev-ruby/thor"
 
 RDEPEND="${RDEPEND}"
+
+all_ruby_install() {
+   all_fakegem_install
+}
