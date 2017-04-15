@@ -24,7 +24,7 @@ IUSE="doc test"
 
 RDEPEND="${RDEPEND} !!<dev-ruby/haml-3.1.8-r2"
 
-ruby_add_rdepend "dev-ruby/tilt"
+ruby_add_rdepend "dev-ruby/tilt:0"
 
 ruby_add_bdepend "
 	test? (
