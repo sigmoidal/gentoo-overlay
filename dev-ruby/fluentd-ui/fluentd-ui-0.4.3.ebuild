@@ -39,6 +39,7 @@ ruby_add_rdepend "
 	>=dev-ruby/rubyzip-1.1 <dev-ruby/rubyzip-2.0
 	>=dev-ruby/sass-rails-4.0.3 <dev-ruby/sass-rails-4.1
 	dev-ruby/settingslogic
+	>=dev-ruby/sucker_punch-1.0.5 <dev-ruby/sucker_punch-1.1
 	dev-ruby/thor"
 
 RDEPEND+="
