@@ -22,22 +22,24 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-#ruby_add_rdepend "
-#dev-ruby/addressable
-#dev-ruby/bundler
-#dev-ruby/diff-lcs
-#>=app-admin/fluentd-0.10.56 <app-admin/fluentd-2.0
-#dev-ruby/font-awesome-rails
-#dev-ruby/haml-rails
-#dev-ruby/httpclient
-#>=dev-ruby/jquery-rails-3.1.0
-#>dev-ruby/kramdown-1.0.0
-#www-servers/puma
-#>=dev-ruby/rails-4.2
-#>=dev-ruby/rubyzip-1.1
-#>=dev-ruby/sass-rails-4.0
-#dev-ruby/settingslogic
-#dev-ruby/thor"
+ruby_add_rdepend "
+	dev-ruby/addressable
+	dev-ruby/bundler
+	dev-ruby/diff-lcs
+	>=dev-ruby/draper-1.3 <dev-ruby/draper-2.0
+	>=app-admin/fluentd-0.10.56 <app-admin/fluentd-2.0
+	dev-ruby/font-awesome-rails
+	>=dev-ruby/haml-rails-0.5.3 <dev-ruby/haml-rails-0.6
+	>=dev-ruby/httpclient-2.5 <dev-ruby/httpclient-3.0
+	>=dev-ruby/jbuilder-2.0 <dev-ruby/jbuilder-3.0
+	>=dev-ruby/jquery-rails-3.1.0 <dev-ruby/jquery-rails-3.2
+	>dev-ruby/kramdown-1.0.0
+	dev-ruby/kramdown-haml
+	>=dev-ruby/rails-4.2 <dev-ruby/rails-4.3
+	>=dev-ruby/rubyzip-1.1 <dev-ruby/rubyzip-2.0
+	>=dev-ruby/sass-rails-4.0.3 <dev-ruby/sass-rails-4.1
+	dev-ruby/settingslogic
+	dev-ruby/thor"
 
 RDEPEND+="
 	>=app-admin/fluentd-0.10.56 <app-admin/fluentd-2.0 
