@@ -36,13 +36,13 @@ ruby_add_rdepend "
 	>=dev-ruby/tzinfo-data-1.0.0
 	=dev-ruby/yajl-ruby-1*"
 
-RDEPEND="${RDEPEND}
-	ruby_targets_ruby19? (
-		>=dev-ruby/string-scrub-0.0.3 <=dev-ruby/string-scrub-0.0.5
-	)
-	ruby_targets_ruby20? (
-		>=dev-ruby/string-scrub-0.0.3 <=dev-ruby/string-scrub-0.0.5
-	)"
+#RDEPEND="${RDEPEND}
+#	ruby_targets_ruby19? (
+#		>=dev-ruby/string-scrub-0.0.3 <=dev-ruby/string-scrub-0.0.5
+#	)
+#	ruby_targets_ruby20? (
+#		>=dev-ruby/string-scrub-0.0.3 <=dev-ruby/string-scrub-0.0.5
+#	)"
 
 pkg_setup() {
 	enewgroup fluentd
