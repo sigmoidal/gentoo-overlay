@@ -26,7 +26,7 @@ KEYWORDS="~amd64 ~arm ~ppc ~ppc64 ~x86 ~ppc-macos ~x64-macos ~x86-macos ~sparc-s
 
 #RUBY_PATCHES=( "${P}-call-private-methods.patch" )
 
-ruby_add_rdepend ">=dev-ruby/timers-4.1.1:4"
+ruby_add_rdepend ">=dev-ruby/timers-1.1.0:1"
 
 all_ruby_prepare() {
 	rm Gemfile .rspec || die
