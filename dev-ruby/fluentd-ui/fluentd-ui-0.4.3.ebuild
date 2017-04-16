@@ -10,7 +10,6 @@ RUBY_FAKEGEM_BINWRAP="fluentd-ui"
 RUBY_FAKEGEM_TASK_DOC=""
 RUBY_FAKEGEM_TASK_TEST=""
 
-
 RUBY_FAKEGEM_GEMSPEC="fluentd-ui.gemspec"
 
 RUBY_FAKEGEM_EXTRADOC="README.md ChangeLog"
@@ -48,6 +47,11 @@ ruby_add_rdepend "
 RDEPEND+="
 	>=app-admin/fluentd-0.10.56 <app-admin/fluentd-2.0 
 	www-servers/puma"
+
+each_ruby_install() {
+	each_fakegem_install
+	ruby_fakegem_doins Gemfile.production
+}
 
 all_ruby_install() {
    all_fakegem_install
