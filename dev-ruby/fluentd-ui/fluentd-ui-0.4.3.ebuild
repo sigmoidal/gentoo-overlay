@@ -10,7 +10,7 @@ RUBY_FAKEGEM_BINWRAP="fluentd-ui"
 RUBY_FAKEGEM_TASK_DOC=""
 RUBY_FAKEGEM_TASK_TEST=""
 
-RUBY_FAKEGEM_GEMSPEC="fluentd-ui.gemspec"
+RUBY_FAKEGEM_GEMSPEC="${PN}.gemspec"
 
 RUBY_FAKEGEM_EXTRADOC="README.md ChangeLog"
 
@@ -50,9 +50,8 @@ RDEPEND+="
 
 all_ruby_prepare() {
 	rm Gemfile || die
-	sed -e '/[Bb]undler/ s:^:#:' \
-		-e '1igem "rails", "~>4.0"' \
-		-i spec/spec_helper.rb || die
+	sed -i -e '/bundler/,/^end/ s:^:#:' spec/spec_helper.rb || die
+	sed -i -e '/bundler/,/^end/ s:^:#:' Rakefile || die
 }
 
 each_ruby_install() {
