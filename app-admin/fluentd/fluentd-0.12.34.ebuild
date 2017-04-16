@@ -5,7 +5,7 @@
 # Obtained from: https://github.com/mazgi/portage-overlay/tree/master/app-admin/fluentd
 
 EAPI=6
-USE_RUBY="ruby21 ruby22"
+USE_RUBY="ruby19 ruby20 ruby21 ruby22"
 
 RUBY_FAKEGEM_BINWRAP="fluentd fluent-cat fluent-debug fluent-gem"
 
