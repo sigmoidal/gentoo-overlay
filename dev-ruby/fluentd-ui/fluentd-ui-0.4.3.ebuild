@@ -48,6 +48,13 @@ RDEPEND+="
 	>=app-admin/fluentd-0.10.56 <app-admin/fluentd-2.0 
 	www-servers/puma"
 
+all_ruby_prepare() {
+	rm Gemfile || die
+	sed -e '/[Bb]undler/ s:^:#:' \
+		-e '1igem "rails", "~>4.0"' \
+		-i spec/spec_helper.rb || die
+}
+
 each_ruby_install() {
 	each_fakegem_install
 	ruby_fakegem_doins Gemfile.production
