@@ -10,6 +10,9 @@ RUBY_FAKEGEM_BINWRAP="fluentd-ui"
 RUBY_FAKEGEM_TASK_DOC=""
 RUBY_FAKEGEM_TASK_TEST=""
 
+
+RUBY_FAKEGEM_GEMSPEC="fluentd-ui.gemspec"
+
 RUBY_FAKEGEM_EXTRADOC="README.md ChangeLog"
 
 inherit ruby-fakegem versionator
