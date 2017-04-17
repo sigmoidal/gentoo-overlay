@@ -31,10 +31,10 @@ ruby_add_rdepend ">=dev-ruby/timers-1.1.0:1"
 all_ruby_prepare() {
 	rm Gemfile .rspec || die
 
-	#sed -i -e '/[Bb]undler/d' -e '/coveralls/I s:^:#:' spec/spec_helper.rb || die
+	sed -i -e '/[Bb]undler/d' -e '/coveralls/I s:^:#:' spec/spec_helper.rb || die
 
 	# Force loading of the correct timers slot to avoid a bundler dependency.
-	#sed -i -e '3igem "timers", "~>4.0"' spec/spec_helper.rb || die
+	sed -i -e '3igem "timers", "~>1.1"' spec/spec_helper.rb || die
 
 	# Adjust timers dependency to match our slots, bug 563018
 	#sed -i -e '/timers/ s/4.0.0/4.0/' ${RUBY_FAKEGEM_GEMSPEC} || die
