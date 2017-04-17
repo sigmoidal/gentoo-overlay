@@ -20,7 +20,7 @@ DESCRIPTION="SIGQUIT of Java VM for Ruby: installs a signal handler which dumps 
 HOMEPAGE="https://github.com/frsyuki/sigdump"
 
 LICENSE="MIT"
-SLOT="$(get_version_component_range 1-2)"
+SLOT="0"
 KEYWORDS="~amd64 ~x86"
 
 IUSE=""
