@@ -31,6 +31,7 @@ ruby_add_rdepend "
 	>=dev-ruby/http_parser_rb-0.5.1 <dev-ruby/http_parser_rb-0.7.0
 	>=dev-ruby/msgpack-0.7.0 <dev-ruby/msgpack-2.0
 	>=dev-ruby/sigdump-0.2.2 <dev-ruby/sigdump-0.3
+	>=dev-ruby/strptime-0.1.7 <dev-ruby/strptime-0.2
 	>=dev-ruby/serverengine-2.0.5
 	>=dev-ruby/tzinfo-1.0.0
 	>=dev-ruby/tzinfo-data-1.0.0
