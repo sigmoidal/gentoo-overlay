@@ -36,6 +36,14 @@ all_ruby_prepare() {
 	sed -i -e '28i  s.add_dependency "iobuffer"' ${RUBY_FAKEGEM_GEMSPEC} || die
 	sed -i -e '/git ls-files/d' ${RUBY_FAKEGEM_GEMSPEC} || die
 
+	sed -i -e 's@"../libev/ev.h"@<ev.h>@' ext/cool.io/ev_wrap.h || die
+	
+	sed -i -e 's@rubyio.h@ruby/io.h@' ext/cool.io/iowatcher.c || die
+	sed -i -e 's@rubyio.h@ruby/io.h@' ext/cool.io/cool.io.h || die
+	sed -i -e 's@rubyio.h@ruby/io.h@' ext/iobuffer/extconf.rb || die
+	
+	sed -i -e 's@libs = \[\]@libs = [ "-lev" ]@g' ext/cool.io/extconf.rb || die
+
 	# Avoid dependency on rake-compiler
 	sed -i -e '/extensiontask/ s:^:#:' \
 		-e '/ExtensionTask/,/^end/ s:^:#:' Rakefile || die
