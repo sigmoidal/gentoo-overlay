@@ -23,3 +23,11 @@ KEYWORDS="~amd64 ~x86"
 
 IUSE=""
 
+each_ruby_configure() {
+	${RUBY} -Cext/strptime extconf.rb || die
+}
+
+each_ruby_compile() {
+	emake V=1 -Cext/strptime
+	cp ext/strptime/strptime$(get_modname) lib/strptime/ || die
+}
