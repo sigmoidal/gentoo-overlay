@@ -49,7 +49,7 @@ all_ruby_prepare() {
 		-e '/ExtensionTask/,/^end/ s:^:#:' Rakefile || die
 
 	# Remove specs that require network connectivity
-	rm -f spec/dns_spec.rb || die
+	#rm -f spec/dns_spec.rb || die
 
 	# Use one address consistently
 	sed -i -e 's/localhost/127.0.0.1/' spec/{udp_socket,tcp_server,iobuffer}_spec.rb || die
@@ -57,7 +57,7 @@ all_ruby_prepare() {
 	# Remove specs that fail, possibly due to libev
 	# incompatibility. Should be investigated but cool.io is no longer
 	# maintained.
-	rm -f spec/udp_socket_spec.rb || die
+	#rm -f spec/udp_socket_spec.rb || die
 }
 
 each_ruby_configure() {
