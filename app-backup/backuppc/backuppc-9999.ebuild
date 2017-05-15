@@ -2,17 +2,24 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-inherit depend.apache eutils git-r3 toolchain-funcs user systemd
 
-MY_P="backuppc-${PV}"
+inherit depend.apache eutils toolchain-funcs user systemd
+
+#MY_P="backuppc-${PV}"
+MY_P="BackupPC-${PV}"
+
+if [[ ${PV} == 9999* ]]; then
+   EGIT_REPO_URI="https://github.com/${PN}/${PN}.git"
+   inherit git-r3
+else
+   SRC_URI="https://github.com/${PN}/${PN}/releases/download/${PV}/${MY_P}.tar.gz"
+   KEYWORDS="amd64 x86"
+fi
 
 DESCRIPTION="High-performance backups to a server's disk"
 HOMEPAGE="https://backuppc.github.io/backuppc"
-SRC_URI=""
-EGIT_REPO_URI="https://github.com/backuppc/backuppc.git"
 
 LICENSE="GPL-3"
-KEYWORDS="amd64 x86"
 SLOT="0"
 IUSE="rss samba apache2 rrdtool systemd"
 
@@ -24,23 +31,23 @@ APACHE_MODULES+="apache2_modules_authz_host," # Require host
 APACHE_MODULES+="apache2_modules_authz_user" # Require valid-user
 
 DEPEND="dev-lang/perl
-   dev-perl/CGI
-   dev-perl/File-Listing
-   dev-perl/Archive-Zip
-   >=dev-perl/BackupPC-XS-0.50
-   >=net-misc/rsync-bpc-3.0.9.6
-   apache2? ( app-admin/makepasswd app-admin/apache-tools )
+	dev-perl/CGI
+	dev-perl/File-Listing
+	dev-perl/Archive-Zip
+	>=dev-perl/BackupPC-XS-0.53
+	>=net-misc/rsync-bpc-3.0.9.6
+	apache2? ( app-admin/makepasswd app-admin/apache-tools )
 "
 
 # Older versions of mod_perl think they're compatibile with apache-2.4,
 # so we require the new one explicitly.
 RDEPEND="${DEPEND}
-   app-arch/tar
-   app-arch/gzip
-   app-arch/bzip2
-   net-misc/rsync
-   rss? ( dev-perl/XML-RSS )
-   rrdtool? ( net-analyzer/rrdtool[graph] )
+	app-arch/tar
+	app-arch/gzip
+	app-arch/bzip2
+	net-misc/rsync
+	rss? ( dev-perl/XML-RSS )
+	rrdtool? ( net-analyzer/rrdtool[graph] )
 	samba? ( net-fs/samba )
 "
 
@@ -57,9 +64,6 @@ RDEPEND="${DEPEND}
 #		 >=www-servers/apache-2.4[${APACHE_MODULES},apache2_modules_fcgid] )
 #	net-misc/rsync
 #	dev-perl/File-RsyncP
-#	rss? ( dev-perl/XML-RSS )
-#	samba? ( net-fs/samba )"
-
 
 need_apache2_4
 

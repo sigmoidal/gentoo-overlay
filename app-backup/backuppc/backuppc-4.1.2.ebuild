@@ -2,16 +2,23 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
+
 inherit depend.apache eutils toolchain-funcs user systemd
 
 MY_P="BackupPC-${PV}"
 
+if [[ ${PV} == 9999* ]]; then
+   EGIT_REPO_URI="https://github.com/${PN}/${PN}.git"
+   inherit git-r3
+else
+   SRC_URI="https://github.com/${PN}/${PN}/releases/download/${PV}/${MY_P}.tar.gz"
+   KEYWORDS="amd64 x86"
+fi
+
 DESCRIPTION="High-performance backups to a server's disk"
 HOMEPAGE="https://backuppc.github.io/backuppc"
-SRC_URI="https://github.com/backuppc/backuppc/releases/download/${PV}/${MY_P}.tar.gz"
 
 LICENSE="GPL-3"
-KEYWORDS="amd64 x86"
 SLOT="0"
 IUSE="rss samba apache2 rrdtool systemd"
 
