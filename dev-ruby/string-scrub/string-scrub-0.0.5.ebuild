@@ -23,3 +23,18 @@ KEYWORDS="~amd64 ~x86"
 
 IUSE=""
 
+all_ruby_prepare() {
+	rm -r Gemfile* || die
+
+	sed -i -e '/[Bb]undler/d' Rakefile || die
+}
+
+each_ruby_configure() {
+	${RUBY} -Cext/string extconf.rb || die
+}
+
+each_ruby_compile() {
+	emake V=1 -Cext/string
+	mkdir lib/string
+	cp ext/string/scrub$(get_modname) lib/string/ || die
+}

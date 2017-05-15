@@ -23,6 +23,12 @@ KEYWORDS="~amd64 ~x86"
 
 IUSE=""
 
+all_ruby_prepare() {
+	rm -r Gemfile* || die
+
+	sed -i -e '/[Bb]undler/d' Rakefile || die
+}
+	
 each_ruby_configure() {
 	${RUBY} -Cext/strptime extconf.rb || die
 }
