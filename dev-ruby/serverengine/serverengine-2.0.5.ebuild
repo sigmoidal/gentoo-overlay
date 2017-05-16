@@ -3,7 +3,8 @@
 # $Id$
 
 EAPI=5
-USE_RUBY="ruby21 ruby22 ruby23"
+
+USE_RUBY="ruby22 ruby23 ruby24"
 
 RUBY_FAKEGEM_RECIPE_DOC="rdoc"
 RUBY_FAKEGEM_EXTRADOC="Changelog README.md"

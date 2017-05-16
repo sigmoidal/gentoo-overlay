@@ -3,7 +3,7 @@
 
 EAPI=6
 # rbx or jruby recommended, but only in 1.9 mode.
-USE_RUBY="ruby20 ruby21 ruby22 ruby23"
+USE_RUBY="ruby22 ruby23 ruby24"
 
 RUBY_FAKEGEM_RECIPE_TEST="rspec"
 #Needed by dev-ruby/listen
