@@ -5,7 +5,7 @@
 # Obtained from: https://github.com/mazgi/portage-overlay/tree/master/app-admin/fluentd
 
 EAPI=6
-USE_RUBY="ruby21 ruby22"
+USE_RUBY="ruby22 ruby23 ruby24"
 
 RUBY_FAKEGEM_BINWRAP="fluentd fluent-cat fluent-debug fluent-gem"
 
@@ -36,17 +36,6 @@ ruby_add_rdepend "
 	>=dev-ruby/tzinfo-1.0.0
 	>=dev-ruby/tzinfo-data-1.0.0
 	=dev-ruby/yajl-ruby-1*"
-
-#RDEPEND="${RDEPEND}
-#	ruby_targets_ruby19? (
-#		>=dev-ruby/string-scrub-0.0.3 <=dev-ruby/string-scrub-0.0.5
-#	)
-#	ruby_targets_ruby20? (
-#		>=dev-ruby/string-scrub-0.0.3 <=dev-ruby/string-scrub-0.0.5
-#	)
-#	ruby_targets_ruby21? (
-#		>=dev-ruby/string-scrub-0.0.3 <=dev-ruby/string-scrub-0.0.5
-#	)"
 
 pkg_setup() {
 	enewgroup fluentd
