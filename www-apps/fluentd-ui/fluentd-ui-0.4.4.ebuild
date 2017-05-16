@@ -56,9 +56,10 @@ pkg_setup() {
 
 
 all_ruby_prepare() {
-	rm Gemfile || die
+	rm Gemfile* || die
 	sed -i -e '/bundler/,/^end/ s:^:#:' spec/spec_helper.rb || die
 	sed -i -e '/bundler/,/^end/ s:^:#:' Rakefile || die
+	#sed -i -e '/[Bb]undler/d' Rakefile || die
 }
 
 each_ruby_install() {
