@@ -64,7 +64,6 @@ all_ruby_prepare() {
 
 each_ruby_install() {
 	each_fakegem_install
-	ruby_fakegem_doins Gemfile.production
 	ruby_fakegem_doins config.ru
 	ruby_fakegem_doins -r app
 	ruby_fakegem_doins -r config
