@@ -25,7 +25,7 @@ KEYWORDS="amd64 ~x86"
 
 IUSE=""
 
-ruby_add_rdepend "dev-ruby/fluentd
+ruby_add_rdepend "app-admin/fluentd
 >=dev-ruby/gelf-2.0.0"
 
 all_ruby_prepare() {
