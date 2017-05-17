@@ -11,7 +11,7 @@ RUBY_FAKEGEM_EXTRAINSTALL="spec"
 RUBY_FAKEGEM_TASK_DOC=""
 RUBY_FAKEGEM_EXTRADOC="CHANGES.md README.md"
 
-#RUBY_FAKEGEM_GEMSPEC="${PN}.gemspec"
+RUBY_FAKEGEM_GEMSPEC="${PN}.gemspec"
 
 inherit ruby-fakegem
 
@@ -34,7 +34,8 @@ all_ruby_prepare() {
 	sed -i -e '/[Bb]undler/d' -e '/coveralls/I s:^:#:' spec/spec_helper.rb || die
 
 	# Force loading of the correct timers slot to avoid a bundler dependency.
-	sed -i -e '3igem "timers", "~>1.1"' spec/spec_helper.rb || die
+	#sed -i -e '3igem "timers", "~>1.1"' spec/spec_helper.rb || die
+	sed -i -e '3irequire "timers"' spec/spec_helper.rb || die
 
 	# Adjust timers dependency to match our slots, bug 563018
 	#sed -i -e '/timers/ s/4.0.0/4.0/' ${RUBY_FAKEGEM_GEMSPEC} || die

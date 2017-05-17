@@ -3,7 +3,7 @@
 
 EAPI=6
 
-USE_RUBY="ruby22 ruby23 ruby24"
+USE_RUBY="ruby21 ruby22 ruby23"
 
 RUBY_FAKEGEM_RECIPE_TEST="rspec3"
 RUBY_FAKEGEM_EXTRADOC="CHANGES.md README.md"
@@ -21,15 +21,20 @@ SLOT="0"
 KEYWORDS="~amd64"
 IUSE=""
 
+# cool.io includes a bundled version of libev that is patched to work correctly with ruby.
+
 ruby_add_rdepend ">=dev-ruby/iobuffer-1"
 
 all_ruby_prepare() {
 	rm -r Gemfile* lib/.gitignore || die
 
 	sed -i -e '/[Bb]undler/d' Rakefile || die
-	sed -i -e '28i  s.add_dependency "iobuffer"' ${RUBY_FAKEGEM_GEMSPEC} || die
+	sed -i -e '20i    s.add_dependency "iobuffer", "~> 1.1"' ${RUBY_FAKEGEM_GEMSPEC} || die
 	sed -i -e '/git ls-files/d' ${RUBY_FAKEGEM_GEMSPEC} || die
 
+	# fix warning: #warning use "ruby/io.h" instead of "rubyio.h"
+	sed -i -e 's/rubyio.h/ruby\/io.h/' ext/cool.io/cool.io.h || die
+	
 	# Avoid dependency on rake-compiler
 	sed -i -e '/extensiontask/ s:^:#:' \
 		-e '/ExtensionTask/,/^end/ s:^:#:' Rakefile || die
@@ -47,10 +52,14 @@ all_ruby_prepare() {
 }
 
 each_ruby_configure() {
-	${RUBY} -Cext/cool.io extconf.rb || die
+	pushd ext/cool.io || die
+	${RUBY} extconf.rb || die
+	popd || die
 }
 
 each_ruby_compile() {
-	emake V=1 -Cext/cool.io
+	pushd ext/cool.io || die
+	emake V=1
+	popd || die
 	cp ext/cool.io/cool.io_ext$(get_modname) lib/ || die
 }

@@ -21,14 +21,14 @@ IUSE=""
 
 all_ruby_prepare() {
 	rm Gemfile || die
-	sed -i -e '/bundler/ s:^:#:' spec/spec_helper.rb || die
-	sed -i -e '/coveralls/ s:^:#:' spec/spec_helper.rb || die
-	sed -i -e '/Coveralls/ s:^:#:' spec/spec_helper.rb || die
-
-	# Remove performance spec due to dependencies and being to dependent
-	# on machine specifics.
-	rm spec/performance_spec.rb
-
-	# Remove rspec3 configuration so we can still run with rspec2.
-	sed -e '/expose/ s:^:#:' -i spec/spec_helper.rb || die
+	#sed -i -e '/bundler/ s:^:#:' spec/spec_helper.rb || die
+	#sed -i -e '/coveralls/ s:^:#:' spec/spec_helper.rb || die
+	#sed -i -e '/Coveralls/ s:^:#:' spec/spec_helper.rb || die
+    #
+	## Remove performance spec due to dependencies and being to dependent
+	## on machine specifics.
+	#rm spec/performance_spec.rb
+    #
+	## Remove rspec3 configuration so we can still run with rspec2.
+	#sed -e '/expose/ s:^:#:' -i spec/spec_helper.rb || die
 }

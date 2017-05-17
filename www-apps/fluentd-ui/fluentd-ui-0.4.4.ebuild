@@ -49,6 +49,8 @@ RDEPEND+="
 	>=app-admin/fluentd-0.10.56 <app-admin/fluentd-2.0 
 	www-servers/puma"
 
+FLUENTD_UI_DIR="/var/lib/${PN}"
+
 pkg_setup() {
 	enewgroup fluentd
 	enewuser fluentd -1 -1 -1 fluentd
