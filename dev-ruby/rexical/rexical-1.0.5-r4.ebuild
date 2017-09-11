@@ -6,13 +6,15 @@ EAPI=6
 
 USE_RUBY="ruby21 ruby22 ruby23 ruby24"
 
+RUBY_FAKEGEM_BINWRAP=""
+
 RUBY_FAKEGEM_TASK_DOC=""
 RUBY_FAKEGEM_TASK_TEST=""
 
 RUBY_FAKEGEM_RECIPE_DOC="rdoc"
 RUBY_FAKEGEM_EXTRADOC="CHANGELOG.rdoc	DOCUMENTATION.en.rdoc  DOCUMENTATION.ja.rdoc  README.ja  README.rdoc"
 
-inherit ruby-fakegem eutils versionator
+inherit ruby-fakegem
 
 DESCRIPTION="Rexical is a lexical scanner generator"
 HOMEPAGE="https://github.com/tenderlove/rexical/tree/master"
