@@ -22,7 +22,7 @@ IUSE=""
 # File collision, bug 459116
 RDEPEND+=" !!app-admin/rex"
 
-ruby_add_bdepend "doc? ( >=dev-ruby/hoe-2.6.2 )"
+#ruby_add_bdepend "doc? ( >=dev-ruby/hoe-2.6.2 )"
 
 all_ruby_prepare() {
 	#sed -i -e '1igem "test-unit"' test/test_generator.rb || die
