@@ -7,7 +7,7 @@ inherit eutils flag-o-matic prefix
 
 DESCRIPTION="rsync version needed for BackupPC 4.x"
 HOMEPAGE="https://github.com/backuppc/rsync-bpc"
-SRC_URI="https://github.com/backuppc/rsync-bpc/releases/download/v3_0_9_6/rsync-bpc-3.0.9.6.tar.gz"
+SRC_URI="https://github.com/backuppc/rsync-bpc/releases/download/${PV}/rsync-bpc-${PV}.tar.gz"
 
 LICENSE="GPL-3"
 SLOT="0"
