@@ -18,7 +18,7 @@ DEPEND="dev-texlive/texlive-bibtexextra
 	dev-texlive/texlive-latexextra
 	dev-texlive/texlive-plaingeneric"
 RDEPEND="${DEPEND}"
-PDEPEND="biber? ( ~dev-tex/biber-2.10 )"
+PDEPEND="biber? ( ~dev-tex/biber-2.11 )"
 
 S="${WORKDIR}"
 TEXMF=/usr/share/texmf-site
