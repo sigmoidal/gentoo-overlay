@@ -1,0 +1,14 @@
+--- certbot-apache/certbot_apache/configurator.py	2018-12-06 02:31:07.000000000 +0200
++++ certbot-apache/certbot_apache/configurator.py.new	2018-12-23 12:10:37.486002840 +0200
+@@ -131,11 +131,6 @@
+             else:
+                 self.options[o] = self.OS_DEFAULTS[o]
+ 
+-        # Special cases
+-        self.options["version_cmd"][0] = self.option("ctl")
+-        self.options["restart_cmd"][0] = self.option("ctl")
+-        self.options["conftest_cmd"][0] = self.option("ctl")
+-
+     @classmethod
+     def add_parser_arguments(cls, add):
+         # When adding, modifying or deleting command line arguments, be sure to
