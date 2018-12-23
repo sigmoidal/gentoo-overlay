@@ -35,7 +35,7 @@ DEPEND="test? ( ${RDEPEND}
 
 src_prepare() {
    eapply -p1 "${FILESDIR}/override_gentoo-apache2ctl.patch"
-   eapply -p1 "${FILESDIR}/configurator-special-cases.patch"
+   #eapply -p1 "${FILESDIR}/configurator-special-cases.patch"
    eapply_user
 }
 

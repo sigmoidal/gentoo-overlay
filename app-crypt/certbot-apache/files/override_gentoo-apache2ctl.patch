@@ -1,5 +1,5 @@
 --- certbot-apache/certbot_apache/override_gentoo.py	2018-12-06 02:31:07.000000000 +0200
-+++ certbot-apache/certbot_apache/override_gentoo.py.new	2018-12-23 11:27:09.605976748 +0200
++++ certbot-apache/certbot_apache/override_gentoo.py.new	2018-12-23 12:31:47.426015546 +0200
 @@ -19,7 +19,7 @@
          vhost_files="*.conf",
          logs_root="/var/log/apache2",
@@ -9,3 +9,11 @@
          restart_cmd=['apache2ctl', 'graceful'],
          restart_cmd_alt=['apache2ctl', 'restart'],
          conftest_cmd=['apache2ctl', 'configtest'],
+@@ -40,6 +40,7 @@
+         """
+         super(GentooConfigurator, self)._prepare_options()
+         self.options["restart_cmd_alt"][0] = self.option("ctl")
++        self.options["version_cmd"] = self.OS_DEFAULTS['version_cmd']
+ 
+     def get_parser(self):
+         """Initializes the ApacheParser"""
