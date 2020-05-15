@@ -26,7 +26,8 @@ src_configure() {
         local mycmakeargs=(
                 -DFLB_HTTP_SERVER=On
                 -DFLB_TLS=On
-                -DFLB_IN_HTTP=On
+                # in_http is still in dev (can't compile)
+                #-DFLB_IN_HTTP=On
         )
         cmake-utils_src_configure
 }
