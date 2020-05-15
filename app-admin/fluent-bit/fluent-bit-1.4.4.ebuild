@@ -28,6 +28,7 @@ src_configure() {
                 -DFLB_TLS=On
                 # in_http is still in dev (can't compile)
                 #-DFLB_IN_HTTP=On
+                -DCMAKE_INSTALL_SYSCONFDIR="${EPREFIX}/etc"
         )
         cmake-utils_src_configure
 }
