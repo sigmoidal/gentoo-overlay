@@ -1,0 +1,39 @@
+#!/sbin/openrc-run
+
+FLUENT_BIT_USER="${FLUENT_BIT_USER:-fluentbit}"
+FLUENT_BIT_GROUP="${FLUENT_BIT_GROUP:-fluentbit}"
+FLUENT_BIT_CONFIG="${FLUENT_BIT_CONFIG:-/etc/fluent-bit/fluent-bit.conf}"
+FLUENT_BIT_DATADIR="${FLUENT_BIT_DATADIR:-/var/lib/fluent-bit}"
+FLUENT_BIT_LOGFILE="${FLUENT_BIT_LOGFILE:-/var/log/fluent-bit.log}"
+FLUENT_BIT_OPTS="${FLUENT_BIT_OPTS:-}"
+FLUENT_BIT_PID="${FLUENT_BIT_PID:-/run/fluent-bit.pid}"
+
+depend() {
+    need net
+    before logger
+}
+
+start_pre() {
+    checkpath -d -m 0755 -o ${FLUENT_BIT_USER}:${FLUENT_BIT_GROUP} ${FLUENT_BIT_DATADIR}
+    checkpath -f -m 0664 -o ${FLUENT_BIT_USER}:${FLUENT_BIT_GROUP} ${FLUENT_BIT_PID}
+    checkpath -f -m 0664 -o ${FLUENT_BIT_USER}:${FLUENT_BIT_GROUP} ${FLUENT_BIT_LOGFILE}
+}
+
+start() {
+    ebegin "Starting ${SVCNAME}"
+    start-stop-daemon \
+   --start \
+   --exec fluent-bit \
+   --user ${FLUENT_BIT_USER} \
+   --group ${FLUENT_BIT_GROUP} \
+   --background \
+   --make-pidfile --pidfile "${FLUENT_BIT_PID}" \
+   -- -c "${FLUENT_BIT_CONFIG}" -l ${FLUENT_BIT_LOGFILE}
+    eend $?
+}
+
+stop() {
+    ebegin "Stopping ${SVCNAME}"
+    start-stop-daemon --stop --pidfile "${FLUENT_BIT_PID}" --retry=TERM/30/KILL/5
+    eend $?
+}
