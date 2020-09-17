@@ -1,0 +1,35 @@
+#!/sbin/openrc-run
+# Copyright 2020 stathis@npcglib.org
+# Distributed under the terms of the GNU General Public License v2
+
+ARIA2_USER="${ARIA2_USER:-aria2}"
+ARIA2_CONFIG="${ARIA2_CONFIG:-/etc/aria2.conf}"
+ARIA2_LOGFILE="${ARIA2_LOGFILE:-/var/log/aria2.log}"
+ARIA2_CACHE_DIR="${ARIA2_CACHE_DIR:-/var/cache/aria2}"
+
+command="/usr/bin/aria2c"
+command_args="
+   --enable-rpc=true
+   --quiet=true
+   --log=$ARIA2_LOGFILE
+   --conf-path=$ARIA2_CONFIG
+   ${command_args:-}"
+command_background="yes"
+
+pidfile="/run/${RC_SVCNAME}.pid"
+output_log="/dev/null"
+error_log="/dev/null"
+start_stop_daemon_args="--env XDG_CACHE_HOME=${ARIA2_CACHE_DIR}"
+
+required_files="${ARIA2_CONFIG}"
+
+depend() {
+   need net
+   use dns netmount
+}
+
+start_pre() {
+   local _logfile=$(sed -En 's|^log=([^#]+)|\1|p' "${ARIA2_CONFIG}")
+
+   checkpath -f -m 640 -o "${ARIA2_USER}" "${ARIA2_CONFIG}:-${ARIA2_CONFIG}"
+}
