@@ -171,31 +171,36 @@ src_configure() {
 }
 
 src_install() {
-	default
+    default
 	rm -rf "${D}"/usr/share/doc/aria2 \
 		"${D}"/usr/share/doc/${PF}/README{,.html}
 
 	dobashcomp doc/bash_completion/aria2c
 	use scripts && dobin doc/xmlrpc/aria2{mon,rpc}
 
-   # conf file installation
-   insinto /etc
-   
-   doins "${FILESDIR}"/${PN}.conf
-   use prefix || fowners ${PN}:${PN} /etc/${PN}.conf
-   fperms 0644 /etc/${PN}.conf
+    # logging
+    dodir /var/log/${PN}
+    use prefix || fowners ${PN}:${PN} /var/log/${PN}
+    
+    # conf file installation
+    insinto /etc
+    doins "${FILESDIR}"/${PN}.conf
+    use prefix || fowners ${PN}:${PN} /etc/${PN}.conf
+    fperms 0644 /etc/${PN}.conf
 
-   # logrotate recipe
-   insinto /etc/logrotate.d
-   newins "${FILESDIR}"/${PN}.logrotate ${PN}
+    # logrotate recipe
+    insinto /etc/logrotate.d
+    newins "${FILESDIR}"/${PN}.logrotate ${PN}
 
-   # service files installation
-   newconfd "${FILESDIR}"/${PN}.confd ${PN}
-   newinitd "${FILESDIR}"/${PN}.initd ${PN}
-   #systemd_dounit "${FILESDIR}"/${PN}.service
+    # service files installation
+    newconfd "${FILESDIR}"/${PN}.confd ${PN}
+    newinitd "${FILESDIR}"/${PN}.initd ${PN}
+    #systemd_dounit "${FILESDIR}"/${PN}.service
 
-   diropts -m 0750 -o ${PN} -g ${PN}
-   keepdir /var/lib/${PN}
+    diropts -m 0750 -o ${PN} -g ${PN}
+    keepdir /var/lib/${PN}
+
+
 }
 
 pkg_postinst() {

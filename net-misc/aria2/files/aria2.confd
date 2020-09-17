@@ -7,4 +7,4 @@
 #ARIA2_CONFIG="/etc/aria2.conf"
 
 # Path of the log file.
-#ARIA2_LOGFILE="/var/log/aria2.log"
+#ARIA2_LOGFILE="/var/log/aria2/aria2.log"
