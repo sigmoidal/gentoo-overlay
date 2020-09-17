@@ -185,7 +185,7 @@ src_install() {
     # conf file installation
     insinto /etc
     doins "${FILESDIR}"/${PN}.conf
-    use prefix || fowners ${PN}:${PN} /etc/${PN}.conf
+    fowners ${PN}:${PN} /etc/${PN}.conf
     fperms 0644 /etc/${PN}.conf
 
     # logrotate recipe
@@ -199,10 +199,10 @@ src_install() {
 
     diropts -m 0750 -o ${PN} -g ${PN}
     dodir /var/lib/${PN}
-    use prefix || fowners ${PN}:${PN} /var/lib/${PN}
+    fowners ${PN}:${PN} /var/lib/${PN}
 
     touch /var/lib/${PN}/${PN}.session || die
-    use prefix || fowners ${PN}:${PN} /var/lib/${PN}/${PN}.session
+    fowners ${PN}:${PN} /var/lib/${PN}/${PN}.session
 }
 
 pkg_postinst() {
