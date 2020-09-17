@@ -180,7 +180,8 @@ src_install() {
 
    # conf file installation
    insinto /etc
-   newins "${FILESDIR}/${PN}.conf"
+   
+   doins "${FILESDIR}"/${PN}.conf
    use prefix || fowners ${PN}:${PN} /etc/${PN}.conf
    fperms 0644 /etc/${PN}.conf
 
