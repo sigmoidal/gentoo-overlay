@@ -198,10 +198,10 @@ src_install() {
     #systemd_dounit "${FILESDIR}"/${PN}.service
 
     diropts -m 0750 -o ${PN} -g ${PN}
-    keepdir /var/lib/${PN}
+    dodir /var/lib/${PN}
     use prefix || fowners ${PN}:${PN} /var/lib/${PN}
 
-    touch /var/lib/${PN}/${PN}.session
+    touch /var/lib/${PN}/${PN}.session || die
     use prefix || fowners ${PN}:${PN} /var/lib/${PN}/${PN}.session
 }
 
