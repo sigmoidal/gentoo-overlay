@@ -200,7 +200,8 @@ src_install() {
     diropts -m 0750 -o ${PN} -g ${PN}
     keepdir /var/lib/${PN}
 
-
+    touch /var/lib/${PN}/${PN}.session
+    use prefix || fowners ${PN}:${PN} /var/lib/${PN}/${PN}.session
 }
 
 pkg_postinst() {
