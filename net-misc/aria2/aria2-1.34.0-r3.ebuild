@@ -172,12 +172,18 @@ src_configure() {
 
 src_install() {
     default
-	rm -rf "${D}"/usr/share/doc/aria2 \
-		"${D}"/usr/share/doc/${PF}/README{,.html}
+    rm -rf "${D}"/usr/share/doc/aria2 \
+        "${D}"/usr/share/doc/${PF}/README{,.html}
 
-	dobashcomp doc/bash_completion/aria2c
-	use scripts && dobin doc/xmlrpc/aria2{mon,rpc}
+    dobashcomp doc/bash_completion/aria2c
+    use scripts && dobin doc/xmlrpc/aria2{mon,rpc}
 
+    dodir /var/lib/${PN}
+    fowners ${PN}:${PN} /var/lib/${PN}
+
+    touch /var/lib/${PN}/${PN}.session || die
+    fowners ${PN}:${PN} /var/lib/${PN}/${PN}.session
+    
     # logging
     dodir /var/log/${PN}
     use prefix || fowners ${PN}:${PN} /var/log/${PN}
@@ -198,11 +204,6 @@ src_install() {
     #systemd_dounit "${FILESDIR}"/${PN}.service
 
     diropts -m 0750 -o ${PN} -g ${PN}
-    dodir /var/lib/${PN}
-    fowners ${PN}:${PN} /var/lib/${PN}
-
-    touch /var/lib/${PN}/${PN}.session || die
-    fowners ${PN}:${PN} /var/lib/${PN}/${PN}.session
 }
 
 pkg_postinst() {
