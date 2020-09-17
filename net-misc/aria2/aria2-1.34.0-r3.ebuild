@@ -178,7 +178,7 @@ src_install() {
     dobashcomp doc/bash_completion/aria2c
     use scripts && dobin doc/xmlrpc/aria2{mon,rpc}
 
-    dodir /var/lib/${PN}
+    keepdir /var/lib/${PN}
     fowners ${PN}:${PN} /var/lib/${PN}
 
     use prefix || touch /var/lib/${PN}/${PN}.session
