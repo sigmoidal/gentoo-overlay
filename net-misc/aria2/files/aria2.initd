@@ -8,12 +8,7 @@ ARIA2_LOGFILE="${ARIA2_LOGFILE:-/var/log/aria2.log}"
 ARIA2_CACHE_DIR="${ARIA2_CACHE_DIR:-/var/cache/aria2}"
 
 command="/usr/bin/aria2c"
-command_args="
-   --enable-rpc=true
-   --quiet=true
-   --log=$ARIA2_LOGFILE
-   --conf-path=$ARIA2_CONFIG
-   ${command_args:-}"
+command_args="--enable-rpc=true --quiet=true --log=${ARIA2_LOGFILE} --conf-path=${ARIA2_CONFIG} ${command_args:-}"
 command_background="yes"
 
 pidfile="/run/${RC_SVCNAME}.pid"

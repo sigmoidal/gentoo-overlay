@@ -179,10 +179,10 @@ src_install() {
 	use scripts && dobin doc/xmlrpc/aria2{mon,rpc}
 
    # conf file installation
-   insinto /etc/
-   doins "${FILESDIR}"/aria2.conf
-   use prefix || fowners aria2:aria2 /etc/aria2.conf
-   fperms 0644 /etc/aria2.conf
+   insinto /etc
+   newins "${FILESDIR}/${PN}.conf"
+   use prefix || fowners ${PN}:${PN} /etc/${PN}.conf
+   fperms 0644 /etc/${PN}.conf
 
    # logrotate recipe
    insinto /etc/logrotate.d

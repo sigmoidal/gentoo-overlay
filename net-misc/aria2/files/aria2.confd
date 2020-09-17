@@ -1,10 +1,10 @@
 # Configuration for /etc/init.d/aria2
 
 # The user (and group) to run Aria2 daemon.
-#command_user="aria2"
+#ARIA2_USER="aria2"
 
 # Path of the configuration file.
-#cfgfile="/etc/aria2.conf"
+#ARIA2_CONFIG="/etc/aria2.conf"
 
 # Path of the log file.
-#logfile="/var/log/aria2.log"
+#ARIA2_LOGFILE="/var/log/aria2.log"
