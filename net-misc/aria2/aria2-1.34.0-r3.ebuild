@@ -178,12 +178,12 @@ src_install() {
     dobashcomp doc/bash_completion/aria2c
     use scripts && dobin doc/xmlrpc/aria2{mon,rpc}
 
+    insinto /var/lib
     keepdir /var/lib/"${PN}"
-    fowners ${PN}:${PN} /var/lib/"${PN}"
-
-    use prefix || touch /var/lib/"${PN}"/"${PN}".session
+    fowners ${PN}:${PN} /var/lib/${PN}
+    doins "${FILESDIR}"/${PN}.session
     fowners ${PN}:${PN} /var/lib/"${PN}"/"${PN}".session
-    
+       
     # logging
     dodir /var/log/"${PN}"
     use prefix || fowners ${PN}:${PN} /var/log/"${PN}"
