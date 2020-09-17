@@ -181,7 +181,7 @@ src_install() {
     dodir /var/lib/${PN}
     fowners ${PN}:${PN} /var/lib/${PN}
 
-    touch /var/lib/${PN}/${PN}.session || die
+    use prefix || touch /var/lib/${PN}/${PN}.session
     fowners ${PN}:${PN} /var/lib/${PN}/${PN}.session
     
     # logging
