@@ -26,5 +26,5 @@ depend() {
 start_pre() {
    local _logfile=$(sed -En 's|^log=([^#]+)|\1|p' "${ARIA2_CONFIG}")
 
-   checkpath -f -m 640 -o "${ARIA2_USER}" "${ARIA2_CONFIG}:-${ARIA2_CONFIG}"
+   checkpath -f -m 640 -o "${ARIA2_USER}" "${ARIA2_CONFIG}"
 }
