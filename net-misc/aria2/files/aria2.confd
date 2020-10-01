@@ -2,6 +2,7 @@
 
 # The user (and group) to run Aria2 daemon.
 #ARIA2_USER="aria2"
+#ARIA2_GROUP="aria2"
 
 # Path of the configuration file.
 #ARIA2_CONFIG="/etc/aria2.conf"
