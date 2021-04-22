@@ -1,19 +1,14 @@
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
-EAPI="7"
+EAPI=7
 
 inherit autotools eutils git-r3
 
 DESCRIPTION="Dyndns client in C supporting various services"
 HOMEPAGE="http://troglobit.com/inadyn.html"
-#SRC_URI="https://github.com/troglobit/${PN}/archive/v${PV}.tar.gz -> ${P}.tar.gz"
-#SRC_URI="https://github.com/sigmoidal
 
 EGIT_REPO_URI="https://github.com/troglobit/${PN}.git"
-#SRC_URI="https://github.com/troglobit/${PN}.git"
-
-#inherit git-2
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -21,11 +16,11 @@ KEYWORDS="amd64 x86"
 IUSE="+ssl libressl"
 
 DEPEND="dev-libs/libite
-dev-libs/confuse
-   ssl? (
-      !libressl? ( dev-libs/openssl:0= )
-      libressl? ( dev-libs/libressl:= )
-   )
+	dev-libs/confuse
+	ssl? (
+		!libressl? ( dev-libs/openssl:0= )
+		libressl? ( dev-libs/libressl:= )
+	)
 "
 
 RDEPEND=""
@@ -33,12 +28,12 @@ RDEPEND=""
 #S="${WORKDIR}/src"
 
 #pkg_setup() {
-	#enewuser inadyn -1 -1 -1
+#enewuser inadyn -1 -1 -1
 #}
 
 src_prepare() {
 	#eapply_user
-   default
+	default
 	eautoreconf
 }
 
@@ -47,12 +42,12 @@ src_configure() {
 }
 
 #src_prepare() {
-#	rm -R bin || die
-#	cp "${FILESDIR}"/${P}-makefile src/Makefile || die
+#  rm -R bin || die
+#  cp "${FILESDIR}"/${P}-makefile src/Makefile || die
 #}
 
 src_compile() {
-#	cd src || die
+#  cd src || die
 	emake || die
 }
 
@@ -60,10 +55,10 @@ src_install() {
 	dosbin src/inadyn || die
 	doman man/${PN}* || die
 
-#	newinitd "${FILESDIR}"/inadyn.initd inadyn || die
+#  newinitd "${FILESDIR}"/inadyn.initd inadyn || die
 
 	insinto /etc/${PN}
-#	doins "${FILESDIR}"/inadyn.conf || die
+#  doins "${FILESDIR}"/inadyn.conf || die
 	doins examples/* || die
 }
 
