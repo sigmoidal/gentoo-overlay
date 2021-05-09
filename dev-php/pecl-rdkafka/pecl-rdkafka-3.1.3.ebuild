@@ -21,4 +21,3 @@ IUSE=""
 DEPEND="dev-libs/librdkafka"
 RDEPEND="${DEPEND}"
 PHP_EXT_ECONF_ARGS=()
-
