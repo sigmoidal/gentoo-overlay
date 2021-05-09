@@ -5,6 +5,11 @@
     <email>stathis@npcglib.org</email>
     <name>stathis</name>
   </maintainer>
+  <use>
+   <flag name="rrdtool">Enable <pkg>net-analyzer/rrdtool</pkg> graphs</flag>
+   <flag name="modperl">Enable <pkg>www-apache/mod_perl</pkg> support.</flag>
+   <flag name="mpm_itk">Enable <pkg>www-apache/mpm_itk</pkg> support.</flag>
+  </use>
   <longdescription lang="en">
     BackupPC is a high-performance, enterprise-grade system for backing up to a server's disk.
   </longdescription>

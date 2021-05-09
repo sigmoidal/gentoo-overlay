@@ -8,11 +8,11 @@ inherit depend.apache eutils toolchain-funcs user systemd
 MY_P="BackupPC-${PV}"
 
 if [[ ${PV} == 9999* ]]; then
-   EGIT_REPO_URI="https://github.com/${PN}/${PN}.git"
-   inherit git-r3
+	EGIT_REPO_URI="https://github.com/${PN}/${PN}.git"
+	inherit git-r3
 else
-   SRC_URI="https://github.com/${PN}/${PN}/releases/download/${PV}/${MY_P}.tar.gz"
-   KEYWORDS="amd64 x86"
+	SRC_URI="https://github.com/${PN}/${PN}/releases/download/${PV}/${MY_P}.tar.gz"
+	KEYWORDS="amd64 x86"
 fi
 
 DESCRIPTION="High-performance backups to a server's disk"
@@ -33,7 +33,7 @@ DEPEND="dev-lang/perl
 	dev-perl/CGI
 	dev-perl/File-Listing
 	dev-perl/Archive-Zip
-   dev-perl/Time-ParseDate
+	dev-perl/Time-ParseDate
 	>=dev-perl/BackupPC-XS-0.62
 	>=net-misc/rsync-bpc-3.1.2.2
 	apache2? ( app-admin/makepasswd app-admin/apache-tools )
@@ -46,8 +46,8 @@ RDEPEND="${DEPEND}
 	app-arch/gzip
 	app-arch/bzip2
 	net-misc/rsync
-   mpm_itk? ( www-apache/mpm_itk )
-   modperl? ( >=www-apache/mod_perl-2.0.10 )
+	mpm_itk? ( www-apache/mpm_itk )
+	modperl? ( >=www-apache/mod_perl-2.0.10 )
 	rss? ( dev-perl/XML-RSS )
 	rrdtool? ( net-analyzer/rrdtool[graph] )
 	samba? ( net-fs/samba )
@@ -223,5 +223,5 @@ pkg_postinst() {
 			elog "  # htpasswd ${CONFDIR}/users.htpasswd newUser"
 		fi
 	fi
-	
+
 }
