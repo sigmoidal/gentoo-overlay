@@ -90,8 +90,8 @@ pkg_setup() {
 		ewarn "and aria2mon scripts against the local aria2."
 	fi
 
-   enewgroup aria2
-   enewuser aria2 -1 -1 /var/lib/aria2 aria2
+	enewgroup aria2
+	enewuser aria2 -1 -1 /var/lib/aria2 aria2
 }
 
 src_prepare() {
@@ -177,32 +177,32 @@ src_install() {
 	dobashcomp doc/bash_completion/aria2c
 	use scripts && dobin doc/xmlrpc/aria2{mon,rpc}
 
-    keepdir /var/lib/${PN}
-    insinto /var/lib/${PN}
-    fowners ${PN}:${PN} /var/lib/${PN}
-    doins "${FILESDIR}"/${PN}.session
-    fowners ${PN}:${PN} /var/lib/"${PN}"/"${PN}".session
+	keepdir /var/lib/${PN}
+	insinto /var/lib/${PN}
+	fowners ${PN}:${PN} /var/lib/${PN}
+	doins "${FILESDIR}"/${PN}.session
+	fowners ${PN}:${PN} /var/lib/"${PN}"/"${PN}".session
 
-    # logging
-    dodir /var/log/"${PN}"
-    use prefix || fowners ${PN}:${PN} /var/log/"${PN}"
+	# logging
+	dodir /var/log/"${PN}"
+	use prefix || fowners ${PN}:${PN} /var/log/"${PN}"
 
-    # conf file installation
-    insinto /etc
-    doins "${FILESDIR}"/${PN}.conf
-    fowners ${PN}:${PN} /etc/${PN}.conf
-    fperms 0644 /etc/${PN}.conf
+	# conf file installation
+	insinto /etc
+	doins "${FILESDIR}"/${PN}.conf
+	fowners ${PN}:${PN} /etc/${PN}.conf
+	fperms 0644 /etc/${PN}.conf
 
-    # logrotate recipe
-    insinto /etc/logrotate.d
-    newins "${FILESDIR}"/${PN}.logrotate ${PN}
+	# logrotate recipe
+	insinto /etc/logrotate.d
+	newins "${FILESDIR}"/${PN}.logrotate ${PN}
 
-    # service files installation
-    newconfd "${FILESDIR}"/${PN}.confd ${PN}
-    newinitd "${FILESDIR}"/${PN}.initd ${PN}
-    #systemd_dounit "${FILESDIR}"/${PN}.service
+	# service files installation
+	newconfd "${FILESDIR}"/${PN}.confd ${PN}
+	newinitd "${FILESDIR}"/${PN}.initd ${PN}
+	#systemd_dounit "${FILESDIR}"/${PN}.service
 
-    diropts -m 0750 -o ${PN} -g ${PN}
+	diropts -m 0750 -o ${PN} -g ${PN}
 }
 
 pkg_postinst() {
