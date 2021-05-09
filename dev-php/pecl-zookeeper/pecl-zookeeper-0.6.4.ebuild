@@ -8,7 +8,7 @@ PHP_EXT_INIT="yes"
 PHP_EXT_ZENDEXT="no"
 DOCS=( CREDITS )
 
-USE_PHP="php7-0 php7-1 php7-2 php7-3 php7-4"
+USE_PHP="php7-3 php7-4"
 
 inherit php-ext-pecl-r3
 
