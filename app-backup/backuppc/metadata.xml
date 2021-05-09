@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE pkgmetadata SYSTEM "http://www.gentoo.org/dtd/metadata.dtd">
 <pkgmetadata>
-	<!-- maintainer-needed -->
-	<upstream>
-		<remote-id type="sourceforge">backuppc</remote-id>
-	</upstream>
+  <maintainer type="person">
+    <email>stathis@npcglib.org</email>
+    <name>stathis</name>
+  </maintainer>
+  <longdescription lang="en">
+    BackupPC is a high-performance, enterprise-grade system for backing up to a server's disk.
+  </longdescription>
+  <upstream>
+    <remote-id type="github">backuppc/backuppc</remote-id>
+    <bugs-to>https://github.com/backuppc/backuppc/issues</bugs-to>
+  </upstream>
 </pkgmetadata>
