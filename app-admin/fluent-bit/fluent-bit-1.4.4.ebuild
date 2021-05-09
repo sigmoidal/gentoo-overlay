@@ -23,22 +23,23 @@ pkg_preinst() {
 }
 
 src_configure() {
-        local mycmakeargs=(
-                -DFLB_HTTP_SERVER=On
-                -DFLB_TLS=On
-                # in_http is still in dev (can't compile)
-                #-DFLB_IN_HTTP=On
-                -DCMAKE_INSTALL_SYSCONFDIR="${EPREFIX}/etc"
-        )
-        cmake-utils_src_configure
+    local mycmakeargs=(
+       -DFLB_HTTP_SERVER=On
+       -DFLB_TLS=On
+       # in_http is still in dev (can't compile)
+       #-DFLB_IN_HTTP=On
+       -DCMAKE_INSTALL_SYSCONFDIR="${EPREFIX}/etc"
+    )
+
+    cmake-utils_src_configure
 }
 
 src_install() {
-        cmake-utils_src_install
+    cmake-utils_src_install
 
-        newinitd "${FILESDIR}"/fluent-bit.initd fluent-bit
-        newconfd "${FILESDIR}"/fluent-bit.confd fluent-bit
+    newinitd "${FILESDIR}"/fluent-bit.initd fluent-bit
+    newconfd "${FILESDIR}"/fluent-bit.confd fluent-bit
 
-        dodir /var/lib/fluent-bit
-        keepdir /var/lib/fluent-bit
+    dodir /var/lib/fluent-bit
+    keepdir /var/lib/fluent-bit
 }
