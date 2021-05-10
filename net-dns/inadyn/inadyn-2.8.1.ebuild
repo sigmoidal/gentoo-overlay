@@ -3,7 +3,7 @@
 
 EAPI=6
 
-inherit autotools eutils git-r3
+inherit autotools eutils
 
 DESCRIPTION="Dyndns client in C supporting various services"
 HOMEPAGE="http://troglobit.com/inadyn.html"
