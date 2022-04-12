@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<repositories version="1.0">
-<repo priority="50" status="unofficial">
-	<name>sigmoid</name>
-	<description>sigmoid profile and Packages</description>
-	<homepage>https://www.npcglib.org/~stathis/blog/</homepage>
-	<owner>
-		<email>stathis@npcglib.org</email>
-		<name>stathis</name>
-	</owner>
-	<source type="git">https://github.com/sigmoidal/gentoo-overlay.git</source>
-	<feed>https://github.com/sigmoidal/gentoo-overlay/commits/master.atom</feed>
-</repo>
+<!DOCTYPE repositories SYSTEM "/dtd/repositories.dtd">
+<repositories xmlns="" version="1.0">
+  <repo quality="experimental" priority="50" status="unofficial">
+    <name>sigmoid</name>
+    <description lang="en">sigmoid profile and Packages</description>
+    <homepage>https://www.npcglib.org/~stathis/blog/</homepage>
+    <owner type="person">
+      <email>stathis@npcglib.org</email>
+      <name>stathis</name>
+    </owner>
+    <source type="git">https://github.com/sigmoidal/gentoo-overlay.git</source>
+    <feed>https://github.com/sigmoidal/gentoo-overlay/commits/master.atom</feed>
+  </repo>
 </repositories>
