@@ -1,7 +1,8 @@
 # Copyright 1999-2019 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=8
+
 DIST_AUTHOR=CBARRATT
 DIST_VERSION=0.62
 
