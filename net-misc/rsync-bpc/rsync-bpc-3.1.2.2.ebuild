@@ -1,9 +1,9 @@
 # Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI="5"
+EAPI=8
 
-inherit eutils flag-o-matic prefix
+inherit flag-o-matic prefix
 
 DESCRIPTION="rsync version needed for BackupPC 4.x"
 HOMEPAGE="https://github.com/backuppc/rsync-bpc"
