@@ -1,9 +1,9 @@
 # Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-inherit depend.apache eutils toolchain-funcs user systemd
+inherit depend.apache toolchain-funcs user systemd
 
 MY_P="BackupPC-${PV}"
 
@@ -41,12 +41,12 @@ DEPEND="dev-lang/perl
 
 # Older versions of mod_perl think they're compatibile with apache-2.4,
 # so we require the new one explicitly.
+#  mpm_itk? ( www-apache/mpm_itk )
 RDEPEND="${DEPEND}
 	app-arch/tar
 	app-arch/gzip
 	app-arch/bzip2
 	net-misc/rsync
-	mpm_itk? ( www-apache/mpm_itk )
 	modperl? ( >=www-apache/mod_perl-2.0.10 )
 	rss? ( dev-perl/XML-RSS )
 	rrdtool? ( net-analyzer/rrdtool[graph] )
