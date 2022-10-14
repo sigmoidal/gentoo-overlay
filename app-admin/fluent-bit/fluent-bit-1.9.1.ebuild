@@ -24,10 +24,15 @@ pkg_preinst() {
 
 src_configure() {
     local mycmakeargs=(
+       -DFLB_RELEASE=On
+       -DFLB_SMALL=On
+       -DFLB_DEBUG=Off
        -DFLB_HTTP_SERVER=On
        -DFLB_TLS=On
+       -DFLB_EXAMPLES=Off
+       -DFLB_TESTS_RUNTIME=Off
        # in_http is still in dev (can't compile)
-       #-DFLB_IN_HTTP=On
+       -DFLB_IN_HTTP=On
        -DCMAKE_INSTALL_SYSCONFDIR="${EPREFIX}/etc"
     )
 
@@ -35,7 +40,7 @@ src_configure() {
 }
 
 src_install() {
-    cmake-utils_src_install
+    cmake_src_install
 
     newinitd "${FILESDIR}"/fluent-bit.initd fluent-bit
     newconfd "${FILESDIR}"/fluent-bit.confd fluent-bit
