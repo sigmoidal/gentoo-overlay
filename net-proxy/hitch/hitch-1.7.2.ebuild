@@ -4,7 +4,7 @@
 
 EAPI=7
 
-inherit eutils user
+inherit eutils
 
 DESCRIPTION="A libev-based high performance SSL/TLS proxy"
 HOMEPAGE="https://hitch-tls.org/"
