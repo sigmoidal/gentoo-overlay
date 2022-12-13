@@ -3,7 +3,7 @@
 
 EAPI=8
 
-WANT_AUTOMAKE=1.13
+WANT_AUTOMAKE=1.16
 
 inherit autotools multilib
 
