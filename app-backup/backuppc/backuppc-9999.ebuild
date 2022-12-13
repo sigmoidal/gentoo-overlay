@@ -1,9 +1,9 @@
 # Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-inherit depend.apache eutils toolchain-funcs user systemd
+inherit depend.apache eutils toolchain-funcs systemd
 
 #MY_P="backuppc-${PV}"
 MY_P="BackupPC-${PV}"

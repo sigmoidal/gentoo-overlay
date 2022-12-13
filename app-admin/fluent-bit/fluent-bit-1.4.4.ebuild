@@ -3,7 +3,7 @@
 
 EAPI=7
 
-inherit cmake multilib user
+inherit cmake multilib
 
 DESCRIPTION="Multi-platform log processor and forwarder"
 HOMEPAGE="https://fluentbit.io"

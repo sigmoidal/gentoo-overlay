@@ -3,7 +3,7 @@
 
 EAPI=7
 
-inherit depend.apache toolchain-funcs user systemd
+inherit depend.apache toolchain-funcs systemd
 
 MY_P="BackupPC-${PV}"
 
