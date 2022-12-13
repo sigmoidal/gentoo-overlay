@@ -3,7 +3,7 @@
 
 EAPI="7"
 
-inherit bash-completion-r1 user
+inherit bash-completion-r1
 
 DESCRIPTION="A download utility with segmented downloading with BitTorrent support"
 HOMEPAGE="https://aria2.github.io/"
