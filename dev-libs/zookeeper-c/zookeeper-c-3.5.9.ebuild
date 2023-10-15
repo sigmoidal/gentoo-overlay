@@ -1,13 +1,13 @@
 
-EAPI=7
+EAPI=8
 
 inherit flag-o-matic
-inherit autotools eutils
+inherit autotools
 
 DESCRIPTION="C client interface to Zookeeper server"
 HOMEPAGE="https://zookeeper.apache.org/"
 
-SRC_URI="https://downloads.apache.org/zookeeper/zookeeper-${PV}/apache-zookeeper-${PV}.tar.gz"
+SRC_URI="https://archive.apache.org/dist/zookeeper/zookeeper-${PV}/apache-zookeeper-${PV}.tar.gz"
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
