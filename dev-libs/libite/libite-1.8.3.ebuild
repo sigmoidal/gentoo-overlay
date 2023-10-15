@@ -2,9 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Id$
 
-EAPI=7
+EAPI=8
 
-inherit autotools eutils
+inherit autotools
 
 DESCRIPTION="Libite is a lightweight library that holds useful functions and macros."
 HOMEPAGE="https://github.com/troglobit/libite"
