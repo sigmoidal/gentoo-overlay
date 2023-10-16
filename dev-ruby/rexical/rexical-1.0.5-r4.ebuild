@@ -2,9 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 
 
-EAPI=6
+EAPI=8
 
-USE_RUBY="ruby22 ruby23 ruby24"
+USE_RUBY="ruby22 ruby23 ruby24 ruby30 ruby31"
 
 #RUBY_FAKEGEM_RECIPE_DOC="rdoc"
 RUBY_FAKEGEM_EXTRADOC="CHANGELOG.rdoc DOCUMENTATION.en.rdoc DOCUMENTATION.ja.rdoc README.ja README.rdoc"
