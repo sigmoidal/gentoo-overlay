@@ -2,8 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=6
-USE_RUBY="ruby22 ruby23 ruby24"
+EAPI=8
+
+USE_RUBY="ruby22 ruby23 ruby24 ruby31"
 
 RUBY_FAKEGEM_BINWRAP=""
 
@@ -12,7 +13,7 @@ RUBY_FAKEGEM_TASK_TEST=""
 
 RUBY_FAKEGEM_EXTRADOC="README.md CHANGELOG VERSION"
 
-inherit ruby-fakegem versionator
+inherit ruby-fakegem
 
 DESCRIPTION="Library to send GELF messages to Graylog logging server"
 HOMEPAGE="https://github.com/graylog-labs/gelf-rb"
