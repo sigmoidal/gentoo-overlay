@@ -2,8 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=6
-USE_RUBY="ruby22 ruby23 ruby24"
+EAPI=8
+
+USE_RUBY="ruby22 ruby23 ruby24 ruby31"
 
 RUBY_FAKEGEM_BINWRAP=""
 
@@ -14,7 +15,7 @@ RUBY_FAKEGEM_EXTRADOC="README.md"
 
 RUBY_FAKEGEM_GEMSPEC="fluent-plugin-gelf-hs.gemspec"
 
-inherit ruby-fakegem versionator
+inherit ruby-fakegem
 
 DESCRIPTION="Buffered fluentd output plugin to GELF (Graylog2)."
 HOMEPAGE="https://github.com/bodhi-space/fluent-plugin-gelf-hs"
