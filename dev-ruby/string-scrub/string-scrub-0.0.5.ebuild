@@ -19,7 +19,7 @@ DESCRIPTION="String#scrub for Ruby 2.2.x, 2.1.x, 2.0.0 and 1.9.3"
 HOMEPAGE="https://github.com/hsbt/string-scrub"
 
 LICENSE="MIT"
-SLOT="$(get_version_component_range 1-2)"
+SLOT="$(ver_cut 1-2)"
 KEYWORDS="~amd64 ~x86"
 
 IUSE=""
