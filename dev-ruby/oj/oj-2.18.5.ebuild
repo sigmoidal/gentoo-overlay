@@ -2,9 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: $
 
-EAPI=6
+EAPI=8
 
-USE_RUBY="ruby22 ruby23 ruby24 ruby25"
+USE_RUBY="ruby22 ruby23 ruby24 ruby25 ruby31"
 
 RUBY_FAKEGEM_BINWRAP=""
 
@@ -13,7 +13,7 @@ RUBY_FAKEGEM_TASK_TEST=""
 
 RUBY_FAKEGEM_EXTRADOC="README.md"
 
-inherit ruby-fakegem versionator
+inherit ruby-fakegem
 
 DESCRIPTION="A fast JSON parser and Object marshaller as a Ruby gem."
 HOMEPAGE="https://github.com/ohler55/oj"
