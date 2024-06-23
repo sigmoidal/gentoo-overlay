@@ -1,9 +1,9 @@
 # Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=6
+EAPI=7
 
-inherit autotools eutils
+inherit autotools
 
 DESCRIPTION="Dyndns client in C supporting various services"
 HOMEPAGE="http://troglobit.com/inadyn.html"
